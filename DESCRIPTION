@@ -16,6 +16,7 @@ Description: Implements the machine learning-based cultural values inventory
     missing country-level indicators via Ridge regression weighted by
     ML-CVI feature importances.
 License: GPL (>= 3)
+URL: https://doi.org/10.31235/osf.io/73g8z_v1
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
