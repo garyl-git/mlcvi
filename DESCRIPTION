@@ -1,0 +1,31 @@
+Package: mlcvi
+Type: Package
+Title: Machine Learning-Based Cultural Values Inventory (ML-CVI)
+Version: 0.3.1
+Authors@R: c(
+    person(
+      "Gary", "Leng",
+      email = "gary-h.leng@polyu.edu.hk",
+      role = c("aut", "cre")
+    )
+  )
+Description: Implements the machine learning-based cultural values inventory
+    (ML-CVI) for cross-cultural research. Provides tools for computing cultural
+    distance between countries via the Kogut-Singh, Shulgin, and ML-CVI methods,
+    screening cultural value mediators using Sobel tests, and imputing
+    missing country-level indicators via Ridge regression weighted by
+    ML-CVI feature importances.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+LazyDataCompression: xz
+RoxygenNote: 7.3.3
+Depends: 
+    R (>= 4.1.0)
+Imports:
+    caret,
+    glmnet,
+    rBayesianOptimization,
+    readxl,
+    stats,
+    utils
