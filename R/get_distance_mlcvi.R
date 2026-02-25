@@ -1,11 +1,10 @@
-# ---- local ISO3 cleaner (or reuse your existing one) ----
 .clean_iso3_maybe <- function(x) {
-  # Reuse the package-level helper if it exists; otherwise define locally
+  # fallback if package-level helper isn't loaded
   if (exists(".clean_iso3", mode = "function")) return(get(".clean_iso3")(x))
   x <- trimws(x); x <- toupper(x); gsub("[[:space:]]+", "", x)
 }
 
-# ---- loader: prefer packaged dataset, else fallback to inst/extdata RDS ----
+# load ML-CVI distance matrix
 .mlcvi_load_mlcvi_matrix <- function() {
   # 1) Prefer internal dataset if shipped via data/MLCVI_distance_matrix.rda
   if (exists("MLCVI_distance_matrix", where = asNamespace("mlcvi"), inherits = FALSE)) {
@@ -26,7 +25,7 @@
        "data/MLCVI_distance_matrix.rda or inst/extdata/MLCVI_distance_matrix.rds.")
 }
 
-# ---- core pairwise lookup: returns list(value=..., error=...) ----
+# pairwise lookup
 .mlcvi_pair <- function(from, to, data = NULL) {
   if (is.null(data)) data <- .mlcvi_load_mlcvi_matrix()
 
@@ -61,7 +60,7 @@
   list(value = val, error = NULL)
 }
 
-# ---- report printer (mirrors your other methods) ----
+# print result
 .mlcvi_report <- function(from, to, res, digits = 3) {
   from <- .clean_iso3_maybe(from); to <- .clean_iso3_maybe(to)
   fmt <- if (is.null(res$error)) sprintf(paste0("%.", digits, "f"), res$value)

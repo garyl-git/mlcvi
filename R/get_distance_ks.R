@@ -5,7 +5,7 @@
 #'
 #' @param code1 Character scalar, ISO alpha-3 code (e.g., "USA")
 #' @param code2 Character scalar, ISO alpha-3 code (e.g., "JPN")
-#' @param method Currently only "KS" (Kogut–Singh). Reserved for future methods.
+#' @param method Character; one of "KS", "Shulgin", or "MLCVI".
 #' @param digits Integer, number of digits to print in the report.
 #' @param data Optional data.frame with columns:
 #'   Country_Code, pdi, idv, mas, uai, ltowvs, ivr.
@@ -147,8 +147,7 @@ mlcvi.get.distance <- function(code1, code2, method = "KS", digits = 3,
   }
 
   cat(
-    # "Based on Hofstede's cultural dimensions theory and the Kogut–Singh method\n",
-    "The cultural distance (Kogut–Singh method) between ", code1, " and ", code2, " is:\n",
+    "The cultural distance (Kogut-Singh method) between ", code1, " and ", code2, " is:\n",
     "4-dims: ", fmt_val(res$KS_4dims), "\n",
     "6-dims: ", fmt_val(res$KS_6dims), "\n",
     sep = ""

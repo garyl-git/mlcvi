@@ -1,4 +1,4 @@
-#' Run multi-mediator Sobel screen (MLCVI-style) and return significant mediators
+#' Sobel mediation screen across ML-CVI items
 #'
 #' Generic engine to screen many mediators between a binary culture IV (0/1)
 #' and a continuous DV. You can pass a data.frame (`df`) or a path to an Excel file
@@ -64,7 +64,7 @@ mlcvi.get.mediator <- function(df = NULL,
                                coerce_iv01 = TRUE) {
   na_action <- match.arg(na_action)
 
-  # --- Load data if path is provided ---
+  # read from file if path given
   if (!is.null(path)) {
     if (!requireNamespace("readxl", quietly = TRUE)) {
       stop("Package 'readxl' is required when using `path`. Install it or pass a data.frame to `df`.")
@@ -74,7 +74,7 @@ mlcvi.get.mediator <- function(df = NULL,
   if (is.null(df)) stop("Provide either `df` (data.frame) or `path` (Excel).")
   df <- as.data.frame(df, stringsAsFactors = FALSE)
 
-  # --- Basic checks for IV/DV presence ---
+  # check IV/DV exist
   if (!is.character(iv) || length(iv) != 1 || !(iv %in% names(df))) {
     stop("IV '", iv, "' is not present in data.")
   }
@@ -82,18 +82,18 @@ mlcvi.get.mediator <- function(df = NULL,
     stop("DV '", dv, "' is not present in data.")
   }
 
-  # --- Coerce IV to numeric 0/1 if needed ---
+  # recode IV to 0/1 if needed
   if (coerce_iv01 && !is.numeric(df[[iv]])) {
     ux <- unique(stats::na.omit(df[[iv]]))
     if (length(ux) == 2) {
       df[[iv]] <- as.integer(df[[iv]] == ux[2])  # second level becomes 1
-      message("Coerced IV '", iv, "' to numeric 0/1 based on its two unique values.")
+      message("IV '", iv, "' recoded to 0/1.")
     } else {
       stop("IV '", iv, "' is not numeric and doesn't have exactly two unique values; please recode to 0/1.")
     }
   }
 
-  # --- Determine mediator set (MLCVI or ABC, keep names as-is) ---
+  # find mediator columns
   if (!is.null(mediator_names)) {
     missing_m <- setdiff(mediator_names, names(df))
     if (length(missing_m)) stop("These mediator columns are missing: ", paste(missing_m, collapse = ", "))
@@ -113,7 +113,6 @@ mlcvi.get.mediator <- function(df = NULL,
     }
   }
 
-  # --- Validate mediator count ---
   if (length(matched) == 0) {
     stop("No mediator columns detected. Provide `mediator_names` or columns matching regex: ",
          mediator_regex, " (or abc1..", expect_n, " if allow_abc_fallback = TRUE).")
@@ -122,21 +121,21 @@ mlcvi.get.mediator <- function(df = NULL,
     stop("Detected ", length(matched), " mediator columns; expected ", expect_n, ".")
   }
 
-  # --- Helper: coef & SE safely ---
+  # coef and SE helper
   coef_se <- function(mod, term) {
     s <- summary(mod)$coef
     if (!term %in% rownames(s)) return(c(NA_real_, NA_real_))
     c(s[term, 1], s[term, 2])  # estimate, SE
   }
 
-  # --- Sobel p helper ---
+  # Sobel test
   sobel_p <- function(a, b, se_a, se_b) {
     se_ab <- sqrt(b^2 * se_a^2 + a^2 * se_b^2)
     z <- (a * b) / se_ab
     2 * stats::pnorm(-abs(z))
   }
 
-  # --- Per-mediator fits ---
+  # run per mediator
   out <- lapply(matched, function(med) {
     use_rows <- if (na_action == "complete.cases") {
       stats::complete.cases(df[, c(iv, dv, med)])

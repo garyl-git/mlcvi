@@ -13,7 +13,7 @@
   df
 }
 
-# Load Shulgin data from packaged .rda (preferred) or CSV fallback in inst/extdata
+# load Shulgin data
 .mlcvi_load_shulgin <- function() {
   # 1) prefer packaged dataset if present (created by data-raw/make_shulgin_data.R)
   if (exists("Shulgin_csv", where = asNamespace("mlcvi"), inherits = FALSE)) {
@@ -34,7 +34,7 @@
        "or inst/extdata/Shulgin.csv in the mlcvi package.")
 }
 
-# core: return list(value=..., error=...) for consistency with KS
+# returns list(value, error)
 .shulgin_pair <- function(from, to, data = NULL) {
   if (is.null(data)) data <- .mlcvi_load_shulgin()
   from <- .clean_iso3(from); to <- .clean_iso3(to)
@@ -59,7 +59,6 @@
   else paste0("NA\n  ", res$error)
 
   cat(
-    # "Based on the Shulgin method\n",
     "The cultural distance (Shulgin method) between ", from, " and ", to, " is:\n",
     fmt, "\n",
     sep = ""
