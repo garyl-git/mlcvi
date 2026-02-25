@@ -84,10 +84,12 @@ mlcvi.get.mediator <- function(df = NULL,
 
   # recode IV to 0/1 if needed
   if (coerce_iv01 && !is.numeric(df[[iv]])) {
-    ux <- unique(stats::na.omit(df[[iv]]))
+    # sort() makes the mapping deterministic regardless of row order:
+    # alphabetically/numerically first unique value → 0, second → 1.
+    ux <- sort(unique(stats::na.omit(df[[iv]])))
     if (length(ux) == 2) {
-      df[[iv]] <- as.integer(df[[iv]] == ux[2])  # second level becomes 1
-      message("IV '", iv, "' recoded to 0/1.")
+      df[[iv]] <- as.integer(df[[iv]] == ux[2])
+      message("IV '", iv, "' recoded to 0/1 (", ux[1], " \u2192 0, ", ux[2], " \u2192 1).")
     } else {
       stop("IV '", iv, "' is not numeric and doesn't have exactly two unique values; please recode to 0/1.")
     }
@@ -128,11 +130,14 @@ mlcvi.get.mediator <- function(df = NULL,
     c(s[term, 1], s[term, 2])  # estimate, SE
   }
 
-  # Sobel test
-  sobel_p <- function(a, b, se_a, se_b) {
+  # Sobel test — returns both z and p so they are never computed twice.
+  # Returns NA when the standard error is zero or non-finite (e.g. perfect
+  # collinearity, constant mediator column) to avoid NaN / Inf propagation.
+  sobel_test <- function(a, b, se_a, se_b) {
     se_ab <- sqrt(b^2 * se_a^2 + a^2 * se_b^2)
+    if (!is.finite(se_ab) || se_ab == 0) return(list(z = NA_real_, p = NA_real_))
     z <- (a * b) / se_ab
-    2 * stats::pnorm(-abs(z))
+    list(z = z, p = 2 * stats::pnorm(-abs(z)))
   }
 
   # run per mediator
@@ -153,11 +158,8 @@ mlcvi.get.mediator <- function(df = NULL,
     ctot <- coef_se(m_c, iv)[1]
     cpr  <- coef_se(m_bc, iv)[1]
 
-    ab <- a * b
-    p  <- sobel_p(a, b, sa, sb)
-
-    se_ab <- sqrt((b^2) * (sa^2) + (a^2) * (sb^2))
-    z <- ab / se_ab
+    ab  <- a * b
+    sob <- sobel_test(a, b, sa, sb)   # single call; avoids duplicate computation
 
     data.frame(
       mediator = med,
@@ -165,8 +167,8 @@ mlcvi.get.mediator <- function(df = NULL,
       a = a, a_se = sa,
       b = b, b_se = sb,
       indirect = ab,
-      sobel_z = z,
-      sobel_p = p,
+      sobel_z = sob$z,
+      sobel_p = sob$p,
       c_total = ctot,
       c_prime = cpr,
       prop_mediated = ifelse(is.finite(ctot) && ctot != 0, ab / ctot, NA_real_),

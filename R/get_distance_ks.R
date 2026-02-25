@@ -7,18 +7,28 @@
 #' @param code2 Character scalar, ISO alpha-3 code (e.g., "JPN")
 #' @param method Character; one of "KS", "Shulgin", or "MLCVI".
 #' @param digits Integer, number of digits to print in the report.
-#' @param data Optional data.frame with columns:
-#'   Country_Code, pdi, idv, mas, uai, ltowvs, ivr.
-#'   If NULL, the function will load the packaged Hofstede data.
+#' @param data Optional custom data to override the packaged dataset.
+#'   \itemize{
+#'     \item \strong{KS}: a data.frame with columns
+#'       \code{Country_Code, pdi, idv, mas, uai, ltowvs, ivr}.
+#'     \item \strong{Shulgin}: a data.frame (distance matrix) with ISO alpha-3
+#'       row and column names.
+#'     \item \strong{MLCVI}: a numeric matrix with ISO alpha-3 row and column
+#'       names.
+#'   }
+#'   If \code{NULL} (default), the packaged dataset for the chosen method is used.
 #' @param verbose Logical; if TRUE prints a multi-line report.
 #'
-#' @return A list with two elements:
+#' @return The return value depends on \code{method}:
 #'   \describe{
-#'     \item{KS_4dims}{numeric value or NA with error message}
-#'     \item{KS_6dims}{numeric value or NA with error message}
+#'     \item{KS}{A list with elements \code{$KS_4dims} and \code{$KS_6dims},
+#'       each a list with \code{$value} (numeric or NA) and \code{$error}
+#'       (NULL or character).}
+#'     \item{Shulgin}{A list with element \code{$Shulgin}, itself a list with
+#'       \code{$value} and \code{$error}.}
+#'     \item{MLCVI}{A list with element \code{$MLCVI}, itself a list with
+#'       \code{$value} and \code{$error}.}
 #'   }
-#' Each element is itself a list with fields \code{$value} (numeric or NA)
-#' and \code{$error} (NULL or character).
 #'
 #' @examples
 #' \dontrun{
@@ -125,6 +135,10 @@ mlcvi.get.distance <- function(code1, code2, method = "KS", digits = 3,
                     error = paste0("ERROR (Hofstede-", label, "): all variances are NA/0 for dims: ",
                                    paste(dims, collapse = ", "))))
       }
+      dropped <- dims[!valid]
+      warning("KS (", label, "): dropping dimension(s) with zero/NA variance: ",
+              paste(dropped, collapse = ", "),
+              ". KS index computed on reduced dimension set.")
       s1 <- s1[valid]; s2 <- s2[valid]; vars <- vars[valid]
     }
 

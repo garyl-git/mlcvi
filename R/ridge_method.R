@@ -29,8 +29,9 @@ make_ridge_method <- function(penalty_factors) {
       )
     },
     predict = function(modelFit, newdata, submodels = NULL) {
-      stats::predict(modelFit, as.matrix(newdata),
-                     s = modelFit$tuneValue$lambda)
+      # glmnet returns an [n x 1] matrix; coerce to plain vector for caret
+      as.vector(stats::predict(modelFit, as.matrix(newdata),
+                               s = modelFit$tuneValue$lambda))
     },
     prob = NULL
   )
