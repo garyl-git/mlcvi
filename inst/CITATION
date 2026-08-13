@@ -1,0 +1,8 @@
+bibentry(
+  bibtype  = "Article",
+  title    = "Machine Learning-Based Cultural Values Inventory (ML-CVI)",
+  author   = person("Gary", "Leng"),
+  journal  = "Journal of Statistical Software",
+  year     = format(Sys.Date(), "%Y"),
+  note     = "in preparation"
+)
