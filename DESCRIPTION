@@ -1,7 +1,7 @@
 Package: mlcvi
 Type: Package
 Title: Machine Learning-Based Cultural Values Inventory (ML-CVI)
-Version: 0.3.1
+Version: 0.3.1.9000
 Authors@R: c(
     person(
       "Gary", "Leng",
@@ -29,4 +29,5 @@ Imports:
     rBayesianOptimization,
     readxl,
     stats,
+    tools,
     utils

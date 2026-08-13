@@ -21,13 +21,6 @@
 #' @format A preProcess object from the caret package.
 "preProcessModel_default"
 
-#' ML-CVI Training Input Matrix
-#'
-#' Individual-level WVS responses used for training.
-#'
-#' @format A numeric matrix.
-"train_input_matrix"
-
 #' ML-CVI Training Output Matrix
 #'
 #' One-hot encoded country membership matrix for training individuals.

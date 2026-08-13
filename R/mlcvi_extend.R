@@ -44,7 +44,7 @@ mlcvi_extend <- function(country_scores,
 
   # defaults
   if (is.null(train_input_matrix)) {
-    train_input_matrix <- mlcvi::train_input_matrix
+    train_input_matrix <- mlcvi_train_input()
   }
   if (is.null(country_vec)) {
     tom <- mlcvi::train_output_matrix
@@ -197,7 +197,7 @@ mlcvi_ridge_model <- function(country_scores,
                               verbose            = TRUE) {
 
   if (is.null(train_input_matrix)) {
-    train_input_matrix <- mlcvi::train_input_matrix
+    train_input_matrix <- mlcvi_train_input()
   }
   if (is.null(country_vec)) {
     tom <- mlcvi::train_output_matrix
