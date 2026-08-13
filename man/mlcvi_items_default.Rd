@@ -12,6 +12,6 @@ mlcvi_items_default
 }
 \description{
 A character vector of the 60 World Values Survey variable names used by
-the ML-CVI neural network.
+the ML-CVI model.
 }
 \keyword{datasets}

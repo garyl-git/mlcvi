@@ -18,24 +18,34 @@ mlcvi.get.distance(
 
 \item{code2}{Character scalar, ISO alpha-3 code (e.g., "JPN")}
 
-\item{method}{Currently only "KS" (Kogut–Singh). Reserved for future methods.}
+\item{method}{Character; one of "KS", "Shulgin", or "MLCVI".}
 
 \item{digits}{Integer, number of digits to print in the report.}
 
-\item{data}{Optional data.frame with columns:
-Country_Code, pdi, idv, mas, uai, ltowvs, ivr.
-If NULL, the function will load the packaged Hofstede data.}
+\item{data}{Optional custom data to override the packaged dataset.
+\itemize{
+  \item \strong{KS}: a data.frame with columns
+    \code{Country_Code, pdi, idv, mas, uai, ltowvs, ivr}.
+  \item \strong{Shulgin}: a data.frame (distance matrix) with ISO alpha-3
+    row and column names.
+  \item \strong{MLCVI}: a numeric matrix with ISO alpha-3 row and column
+    names.
+}
+If \code{NULL} (default), the packaged dataset for the chosen method is used.}
 
 \item{verbose}{Logical; if TRUE prints a multi-line report.}
 }
 \value{
-A list with two elements:
+The return value depends on \code{method}:
   \describe{
-    \item{KS_4dims}{numeric value or NA with error message}
-    \item{KS_6dims}{numeric value or NA with error message}
+    \item{KS}{A list with elements \code{$KS_4dims} and \code{$KS_6dims},
+      each a list with \code{$value} (numeric or NA) and \code{$error}
+      (NULL or character).}
+    \item{Shulgin}{A list with element \code{$Shulgin}, itself a list with
+      \code{$value} and \code{$error}.}
+    \item{MLCVI}{A list with element \code{$MLCVI}, itself a list with
+      \code{$value} and \code{$error}.}
   }
-Each element is itself a list with fields \code{$value} (numeric or NA)
-and \code{$error} (NULL or character).
 }
 \description{
 Computes cultural distance between two countries (ISO alpha-3 codes)

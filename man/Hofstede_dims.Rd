@@ -5,12 +5,12 @@
 \alias{Hofstede_dims}
 \title{Hofstede Cultural Dimensions}
 \format{
-A data frame.
+A data frame with one row per country.
 }
 \usage{
 Hofstede_dims
 }
 \description{
-Country-level Hofstede cultural dimension scores.
+Country-level scores on Hofstede's six cultural dimensions (PDI, IDV, MAS, UAI, LTO, IVR).
 }
 \keyword{datasets}

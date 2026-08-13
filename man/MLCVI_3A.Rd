@@ -3,7 +3,7 @@
 \docType{data}
 \name{MLCVI_3A}
 \alias{MLCVI_3A}
-\title{MLCVI Study 3A Data}
+\title{ML-CVI Study 3A Data}
 \format{
 A data frame.
 }
@@ -11,6 +11,6 @@ A data frame.
 MLCVI_3A
 }
 \description{
-Data from Study 3A.
+Individual-level data from Study 3A.
 }
 \keyword{datasets}

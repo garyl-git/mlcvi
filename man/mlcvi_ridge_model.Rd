@@ -2,7 +2,7 @@
 % Please edit documentation in R/mlcvi_extend.R
 \name{mlcvi_ridge_model}
 \alias{mlcvi_ridge_model}
-\title{Train an ML-CVI Ridge Model (returns the caret model object)}
+\title{Train an ML-CVI Ridge model}
 \usage{
 mlcvi_ridge_model(
   country_scores,
@@ -52,5 +52,5 @@ Default 50.}
 A train object from the caret package.
 }
 \description{
-Train an ML-CVI Ridge Model (returns the caret model object)
+Train an ML-CVI Ridge model
 }

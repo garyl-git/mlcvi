@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_mediator.R
 \name{mlcvi.get.mediator}
 \alias{mlcvi.get.mediator}
-\title{Run multi-mediator Sobel screen (MLCVI-style) and return significant mediators}
+\title{Sobel mediation screen across ML-CVI items}
 \usage{
 mlcvi.get.mediator(
   df = NULL,

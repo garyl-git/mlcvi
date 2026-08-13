@@ -3,14 +3,14 @@
 \docType{data}
 \name{Shulgin_csv}
 \alias{Shulgin_csv}
-\title{Shulgin Data}
+\title{Shulgin Distance Data}
 \format{
-A data frame.
+A data frame with ISO alpha-3 country codes as row and column names.
 }
 \usage{
 Shulgin_csv
 }
 \description{
-Country-level data from Shulgin.
+Pairwise cultural distance matrix from Shulgin et al.
 }
 \keyword{datasets}

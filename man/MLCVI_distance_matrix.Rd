@@ -3,14 +3,14 @@
 \docType{data}
 \name{MLCVI_distance_matrix}
 \alias{MLCVI_distance_matrix}
-\title{MLCVI Distance Matrix}
+\title{ML-CVI Distance Matrix}
 \format{
-A matrix.
+A numeric matrix with ISO alpha-3 country codes as row and column names.
 }
 \usage{
 MLCVI_distance_matrix
 }
 \description{
-Pairwise cultural distance matrix.
+Pairwise cultural distances between countries computed via the ML-CVI method.
 }
 \keyword{datasets}
