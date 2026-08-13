@@ -5,3 +5,9 @@
 .DS_Store
 *.tar.gz
 *.Rcheck/
+.Rapp.history
+.RDataTmp*
+CLAUDE.md
+PLAN.md
+docs/decisions-for-sheetal.md
+inst/extdata/train_input_matrix.rds
