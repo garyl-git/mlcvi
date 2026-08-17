@@ -22,7 +22,7 @@
 #' @param adjust Character; p.adjust method (default "BH").
 #' @param ignore_case Logical; case-insensitive matching for regex (default TRUE).
 #' @param na_action One of `"complete.cases"` (default) or `"none"`. If `"complete.cases"`,
-#'   per-mediator fits use rows complete on {IV, DV, mediator}.
+#'   per-mediator fits use rows complete on IV, DV, and the mediator.
 #' @param coerce_iv01 Logical; if TRUE (default), coerce non-numeric two-level IV to 0/1.
 #'
 #' @return A list with:

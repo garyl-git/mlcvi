@@ -52,7 +52,7 @@ the function will also try `abc1..abc60` and **use those names as-is**.}
 \item{ignore_case}{Logical; case-insensitive matching for regex (default TRUE).}
 
 \item{na_action}{One of `"complete.cases"` (default) or `"none"`. If `"complete.cases"`,
-per-mediator fits use rows complete on {IV, DV, mediator}.}
+per-mediator fits use rows complete on IV, DV, and the mediator.}
 
 \item{coerce_iv01}{Logical; if TRUE (default), coerce non-numeric two-level IV to 0/1.}
 }
