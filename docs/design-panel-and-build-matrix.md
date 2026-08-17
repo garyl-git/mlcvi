@@ -1,7 +1,7 @@
 # Design: mlcvi_get_panel() and mlcvi_build_matrix()
 
-Written 2026-08-13 before implementation (PLAN.md step 11 requires design on
-paper first). Kept out of the built package (docs/ is in .Rbuildignore).
+Written 2026-08-13 before implementation. Kept out of the built package
+(docs/ is in .Rbuildignore).
 
 ## 1. mlcvi_get_panel()
 

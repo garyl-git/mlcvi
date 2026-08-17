@@ -18,7 +18,9 @@
 # the ML-CVI training data, and for which country-waves does the matrix
 # have respondents?" It CANNOT tell whether an item was originally
 # administered in a given WVS wave. For that, check the WVS codebook or the
-# raw WVS longitudinal file (see docs/decisions-for-sheetal.md, question 5).
+# raw WVS longitudinal file. The procedure that completed the training matrix
+# is to be documented in the package data documentation and the paper once
+# confirmed with the original authors.
 
 item_coverage <- function(items, full = TRUE, min_n = 30L) {
   items <- tolower(trimws(items))

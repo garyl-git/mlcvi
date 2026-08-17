@@ -4,9 +4,17 @@ Use for every tagged release (next: 0.4.0). Tick in order.
 
 ## Before tagging
 
-- [ ] All ACTION items in PLAN.md resolved or consciously deferred.
-- [ ] `docs/decisions-for-sheetal.md` answered; decisions reflected in code
-      and documentation (custom-item labelling, wave rule, wave 7).
+- [ ] Every open item on the working to-do list is either resolved or
+      explicitly deferred to a later version, with the deferral noted in
+      NEWS.md.
+- [ ] The open methodology questions are settled with the co-authors and
+      reflected in code and documentation: where the ML-CVI training pipeline
+      lives and whether it enters the repository; whether WVS wave 7 is
+      ingested; which year-to-wave assignment rules `mlcvi_get_panel()`
+      offers (step, carry-forward; no interpolation); whether custom-item
+      distances stay classical-only under distinct names with "ML-CVI"
+      reserved for the published matrix; and how the training matrix was
+      completed, stated in the data documentation.
 - [ ] The full training matrix is hosted (OSF) and
       `.mlcvi_train_url_default` in `R/internal.R` points at it; a fresh
       session with an empty `tools::R_user_dir("mlcvi", "cache")` downloads
