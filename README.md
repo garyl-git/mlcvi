@@ -30,6 +30,18 @@ out <- mlcvi.get.mediator(df = MLCVI_4A, iv = "US0IN1", dv = "envavg")
 out$significant_items
 head(out$results)
 
+# Distances for a whole panel of country pairs at once
+pairs <- data.frame(iso1 = c("USA", "USA", "DEU"),
+                    iso2 = c("JPN", "CHN", "CHN"),
+                    year = c(2005, 2010, 2010))
+mlcvi_get_panel(pairs, method = "MLCVI")
+
+# Build a distance matrix from your own item set (here ten ML-CVI items
+# on the bundled subsample), then use it like any packaged table
+small <- mlcvi:::mlcvi_train_input(small = TRUE)
+m <- mlcvi_build_matrix(mlcvi_items_default[1:10], data = small, min_n = 20)
+mlcvi_get_panel(pairs, method = "MLCVI", data = m)
+
 # Impute a country-level indicator for countries where it is missing,
 # using Ridge regression weighted by ML-CVI feature importances
 codes  <- sub("^s003_", "", colnames(train_output_matrix))
@@ -48,12 +60,13 @@ mlcvi_extend(scores, lambda = 0.1, repeats = 5L, verbose = FALSE)
 | `MLCVI_3A`, `MLCVI_4A` | Individual-level data from Studies 3a and 4a |
 | `mlcvi_items_default`, `mlcvi_weights_default` | The 60 ML-CVI WVS items and their importance weights |
 | `train_output_matrix` | One-hot country membership for the training sample |
+| `wvs_country_codes` | WVS numeric country codes mapped to ISO alpha-3 |
 
 The full individual-level training matrix (about 280 MB) is not shipped inside the package. `mlcvi_extend()` and `mlcvi_ridge_model()` download it once on first use and cache it under `tools::R_user_dir("mlcvi", "cache")`. Set `options(mlcvi.train_url = ...)` or the `MLCVI_TRAIN_URL` environment variable to point at an alternative source. A subsampled matrix for quick experiments ships with the package: `mlcvi:::mlcvi_train_input(small = TRUE)`.
 
 ## Function naming
 
-The functions `mlcvi.get.distance()` and `mlcvi.get.mediator()` keep their original dotted names for compatibility with the published user guide. All newer functions use snake_case (`mlcvi_extend()`, `mlcvi_ridge_model()`), and future additions will follow that convention.
+The functions `mlcvi.get.distance()` and `mlcvi.get.mediator()` keep their original dotted names for compatibility with the published user guide. All newer functions use snake_case (`mlcvi_extend()`, `mlcvi_ridge_model()`, `mlcvi_get_panel()`, `mlcvi_build_matrix()`), and future additions will follow that convention.
 
 ## Contact
 

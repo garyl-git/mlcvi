@@ -1,5 +1,21 @@
 # mlcvi (development version)
 
+## New functions
+
+- `mlcvi_get_panel()` looks up cultural distances for a whole data frame of
+  country pairs at once (for merging into dyadic panel data). Unresolvable
+  rows get `NA` plus a `distance_note` instead of an error, and the input
+  rows and order are preserved. A `rule` argument reserves the interface for
+  wave-specific tables (`"wave"`, `"locf"`); only `"static"` is available
+  in this version.
+- `mlcvi_build_matrix()` constructs classical distance matrices
+  (Kogut-Singh style, Euclidean, Mahalanobis) from a user-specified WVS item
+  set, at country level or one matrix per WVS wave, with renormalization
+  over the items available to each pair. Output plugs directly into
+  `mlcvi.get.distance()` and `mlcvi_get_panel()` as `data`.
+- New dataset `wvs_country_codes` maps the WVS numeric country codes of the
+  training sample to ISO alpha-3 codes.
+
 ## Data distribution
 
 - The full training input matrix no longer ships inside the package. It is
