@@ -28,3 +28,15 @@
 #' @format A numeric matrix.
 "train_output_matrix"
 
+#' WVS country codes mapped to ISO alpha-3
+#'
+#' The 98 countries of the ML-CVI training sample, keyed by their WVS
+#' numeric country code (ISO 3166-1 numeric, as used in
+#' \code{train_output_matrix} column names \code{s003_<code>}), with the
+#' corresponding ISO 3166-1 alpha-3 code and English name.
+#'
+#' @format A data frame with 98 rows and 3 columns: \code{wvs_code}
+#'   (integer), \code{iso3} (character), \code{name} (character).
+#' @source ISO 3166-1 via the ISOcodes package.
+"wvs_country_codes"
+
