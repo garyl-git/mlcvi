@@ -19,8 +19,9 @@
 ## Data distribution
 
 - The full training input matrix no longer ships inside the package. It is
-  looked up in `inst/extdata/` for source checkouts, then in the user cache,
-  and is otherwise downloaded once and cached via `tools::R_user_dir()`.
+  hosted on OSF (https://osf.io/3csbz/), looked up in `inst/extdata/` for
+  source checkouts, then in the user cache, and is otherwise downloaded
+  once (with checksum verification) and cached via `tools::R_user_dir()`.
   Configure the source with `options(mlcvi.train_url = ...)` or the
   `MLCVI_TRAIN_URL` environment variable.
 - A subsampled training matrix (25 respondents per country) ships with the

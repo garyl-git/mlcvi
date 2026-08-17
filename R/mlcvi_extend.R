@@ -36,9 +36,9 @@
 #'
 #' @details
 #' The full training matrix is not shipped inside the package. On first use
-#' it is downloaded from the location given by
-#' \code{getOption("mlcvi.train_url")} or the \code{MLCVI_TRAIN_URL}
-#' environment variable and cached under
+#' it is downloaded from OSF (\url{https://osf.io/3csbz/}), or from the
+#' location given by \code{getOption("mlcvi.train_url")} or the
+#' \code{MLCVI_TRAIN_URL} environment variable, and cached under
 #' \code{tools::R_user_dir("mlcvi", "cache")}. Later calls read the cache.
 #'
 #' @examples

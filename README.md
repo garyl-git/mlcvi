@@ -62,7 +62,7 @@ mlcvi_extend(scores, lambda = 0.1, repeats = 5L, verbose = FALSE)
 | `train_output_matrix` | One-hot country membership for the training sample |
 | `wvs_country_codes` | WVS numeric country codes mapped to ISO alpha-3 |
 
-The full individual-level training matrix (about 280 MB) is not shipped inside the package. `mlcvi_extend()` and `mlcvi_ridge_model()` download it once on first use and cache it under `tools::R_user_dir("mlcvi", "cache")`. Set `options(mlcvi.train_url = ...)` or the `MLCVI_TRAIN_URL` environment variable to point at an alternative source. A subsampled matrix for quick experiments ships with the package: `mlcvi:::mlcvi_train_input(small = TRUE)`.
+The full individual-level training matrix (about 280 MB) is hosted on OSF (https://osf.io/3csbz/) rather than shipped inside the package. `mlcvi_extend()`, `mlcvi_ridge_model()` and `mlcvi_build_matrix()` download it once on first use, verify its checksum, and cache it under `tools::R_user_dir("mlcvi", "cache")`; later sessions read the cache. Set `options(mlcvi.train_url = ...)` or the `MLCVI_TRAIN_URL` environment variable to point at an alternative source. A subsampled matrix for quick experiments ships with the package: `mlcvi:::mlcvi_train_input(small = TRUE)`.
 
 ## Function naming
 

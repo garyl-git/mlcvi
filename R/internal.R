@@ -1,8 +1,9 @@
 .mlcvi_cache <- new.env(parent = emptyenv())
 
-# Download location for the full training matrix; set once the file is
-# hosted. Users can override via options() or the environment variable.
-.mlcvi_train_url_default <- ""
+# Download location for the full training matrix (OSF project 3csbz).
+# Users can override via options() or the environment variable.
+.mlcvi_train_url_default <- "https://osf.io/download/st3hd/"
+.mlcvi_train_md5 <- "81ad00e3cf1d5a6c28603ac3cc9fbc6b"
 
 .mlcvi_train_url <- function() {
   url <- getOption("mlcvi.train_url", "")
@@ -71,10 +72,20 @@ mlcvi_train_input <- function(small = FALSE) {
   message("Downloading the ML-CVI training matrix (~280 MB) to ", cache_dir)
   tmp <- paste0(cache_path, ".download")
   on.exit(unlink(tmp), add = TRUE)
+  old_timeout <- getOption("timeout")
+  options(timeout = max(3600, old_timeout))
+  on.exit(options(timeout = old_timeout), add = TRUE)
   status <- utils::download.file(url, tmp, mode = "wb", quiet = FALSE)
   if (status != 0L) {
     stop("Download of the ML-CVI training matrix failed (status ", status,
          ").", call. = FALSE)
+  }
+  if (identical(url, .mlcvi_train_url_default)) {
+    got <- unname(tools::md5sum(tmp))
+    if (!identical(got, .mlcvi_train_md5)) {
+      stop("Downloaded training matrix has an unexpected checksum (", got,
+           "). The download may be corrupt; please retry.", call. = FALSE)
+    }
   }
   x <- tryCatch(
     readRDS(tmp),
