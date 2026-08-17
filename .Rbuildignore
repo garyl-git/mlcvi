@@ -9,3 +9,5 @@
 ^PLAN\.md$
 ^docs$
 ^inst/extdata/train_input_matrix\.rds$
+^doc$
+^Meta$
