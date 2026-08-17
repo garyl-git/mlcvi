@@ -125,3 +125,24 @@ test_that("panel never prints", {
   expect_silent(mlcvi_get_panel(pairs[1:3, ], method = "MLCVI"))
   expect_silent(mlcvi_get_panel(pairs[1:3, ], method = "KS"))
 })
+
+test_that("method = 'matrix' looks up a user-supplied table and requires data", {
+  m <- MLCVI_distance_matrix[1:5, 1:5]
+  cn <- colnames(m)
+  p  <- data.frame(iso1 = cn[1], iso2 = c(cn[2], cn[3], "ZZZ"))
+  out <- mlcvi_get_panel(p, method = "matrix", data = m)
+  expect_equal(out$distance[1:2], m[cn[1], cn[2:3]], ignore_attr = TRUE)
+  expect_true(is.na(out$distance[3]))
+  expect_match(out$distance_note[3], "country code not found: ZZZ")
+  # identical to the MLCVI path on the same table
+  ref <- mlcvi_get_panel(p, method = "MLCVI", data = m)
+  expect_equal(out$distance, ref$distance)
+  expect_error(mlcvi_get_panel(p, method = "matrix"),
+               "requires a square table in 'data'")
+  # a build_matrix result plugs in directly
+  small <- mlcvi_train_input(small = TRUE)
+  b <- mlcvi_build_matrix(mlcvi_items_default[1:5], data = small, min_n = 20)
+  q <- data.frame(iso1 = "USA", iso2 = c("JPN", "DEU"))
+  out2 <- mlcvi_get_panel(q, method = "matrix", data = b)
+  expect_equal(out2$distance, b["USA", c("JPN", "DEU")], ignore_attr = TRUE)
+})

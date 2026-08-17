@@ -15,6 +15,10 @@
   `mlcvi.get.distance()` and `mlcvi_get_panel()` as `data`.
 - New dataset `wvs_country_codes` maps the WVS numeric country codes of the
   training sample to ISO alpha-3 codes.
+- `mlcvi.get.distance()` and `mlcvi_get_panel()` accept `method = "matrix"`
+  to look up a user-supplied square table (such as the output of
+  `mlcvi_build_matrix()`) without attaching a method label; the ML-CVI
+  label stays with the packaged matrix.
 
 ## Data distribution
 

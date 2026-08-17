@@ -40,7 +40,7 @@ mlcvi_get_panel(pairs, method = "MLCVI")
 # on the bundled subsample), then use it like any packaged table
 small <- mlcvi:::mlcvi_train_input(small = TRUE)
 m <- mlcvi_build_matrix(mlcvi_items_default[1:10], data = small, min_n = 20)
-mlcvi_get_panel(pairs, method = "MLCVI", data = m)
+mlcvi_get_panel(pairs, method = "matrix", data = m)
 
 # Impute a country-level indicator for countries where it is missing,
 # using Ridge regression weighted by ML-CVI feature importances

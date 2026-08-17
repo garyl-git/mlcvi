@@ -5,7 +5,10 @@
 #'
 #' @param code1 Character scalar, ISO alpha-3 code (e.g., "USA")
 #' @param code2 Character scalar, ISO alpha-3 code (e.g., "JPN")
-#' @param method Character; one of "KS", "Shulgin", or "MLCVI".
+#' @param method Character; one of "KS", "Shulgin", "MLCVI", or "matrix".
+#'   "matrix" looks up a user-supplied square table passed as \code{data}
+#'   (for example the output of \code{\link{mlcvi_build_matrix}}) and
+#'   carries no method label of its own.
 #' @param digits Integer, number of digits to print in the report.
 #' @param data Optional custom data to override the packaged dataset.
 #'   \itemize{
@@ -15,6 +18,8 @@
 #'       row and column names.
 #'     \item \strong{MLCVI}: a numeric matrix with ISO alpha-3 row and column
 #'       names.
+#'     \item \strong{matrix}: as for MLCVI; required, there is no packaged
+#'       default.
 #'   }
 #'   If \code{NULL} (default), the packaged dataset for the chosen method is used.
 #' @param verbose Logical; if TRUE prints a multi-line report.
@@ -27,6 +32,8 @@
 #'     \item{Shulgin}{A list with element \code{$Shulgin}, itself a list with
 #'       \code{$value} and \code{$error}.}
 #'     \item{MLCVI}{A list with element \code{$MLCVI}, itself a list with
+#'       \code{$value} and \code{$error}.}
+#'     \item{matrix}{A list with element \code{$matrix}, itself a list with
 #'       \code{$value} and \code{$error}.}
 #'   }
 #'
@@ -48,6 +55,11 @@
 #'
 #' # Custom data can override the packaged table
 #' mlcvi.get.distance("USA", "JPN", method = "KS", data = Hofstede_dims)
+#'
+#' # A user-built matrix, looked up as-is
+#' small <- mlcvi:::mlcvi_train_input(small = TRUE)
+#' m <- mlcvi_build_matrix(mlcvi_items_default[1:10], data = small, min_n = 20)
+#' mlcvi.get.distance("USA", "JPN", method = "matrix", data = m)
 #' @seealso [mlcvi.get.mediator()], [mlcvi_extend()]
 #' @export
 mlcvi.get.distance <- function(code1, code2, method = "KS", digits = 3,
@@ -75,7 +87,17 @@ mlcvi.get.distance <- function(code1, code2, method = "KS", digits = 3,
     return(invisible(list(MLCVI = res2)))
   }
 
-  stop("Unknown method: '", method, "'. Use method = 'KS', 'Shulgin', or 'MLCVI'.")
+  if (method == "matrix") {
+    if (is.null(data)) {
+      stop("method = 'matrix' requires a square table in 'data'.")
+    }
+    res3 <- .mlcvi_pair(code1, code2, data, label = "matrix")
+    if (isTRUE(verbose)) .matrix_report(code1, code2, res3, digits = digits)
+    return(invisible(list(matrix = res3)))
+  }
+
+  stop("Unknown method: '", method, "'. Use method = 'KS', 'Shulgin', ",
+       "'MLCVI', or 'matrix'.")
 }
 
 # ------------ internal helpers ------------

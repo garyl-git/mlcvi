@@ -123,13 +123,14 @@ the fitted caret model itself.
 user-specified set of WVS items: a Kogut-Singh style index with items as
 dimensions, Euclidean distance, or Mahalanobis distance on the country means.
 The result has ISO alpha-3 dimnames and can be passed as `data` to the lookup
-functions.
+functions with `method = "matrix"`, which looks the table up as-is without
+attaching a method label.
 
 ```{r}
 items <- mlcvi_items_default[1:10]
 m <- mlcvi_build_matrix(items, data = small, min_n = 20)
 m[c("USA", "JPN", "DEU"), c("USA", "JPN", "DEU")]
-mlcvi_get_panel(pairs, method = "MLCVI", data = m)
+mlcvi_get_panel(pairs, method = "matrix", data = m)
 ```
 
 Setting `by_wave = TRUE` returns one matrix per WVS wave. Countries with

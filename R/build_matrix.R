@@ -67,9 +67,9 @@
 #' m["USA", "JPN"]
 #'
 #' # The result plugs into the lookup functions
-#' mlcvi.get.distance("USA", "JPN", method = "MLCVI", data = m)
+#' mlcvi.get.distance("USA", "JPN", method = "matrix", data = m)
 #' mlcvi_get_panel(data.frame(iso1 = "USA", iso2 = c("JPN", "DEU")),
-#'                 method = "MLCVI", data = m)
+#'                 method = "matrix", data = m)
 #'
 #' # One matrix per WVS wave (the subsample is thin per wave, so min_n is
 #' # lowered here; use the default with the full data)

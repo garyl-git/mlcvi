@@ -6,7 +6,7 @@
 \usage{
 mlcvi_get_panel(
   pairs,
-  method = c("MLCVI", "KS", "Shulgin"),
+  method = c("MLCVI", "KS", "Shulgin", "matrix"),
   iso1 = "iso1",
   iso2 = "iso2",
   year = "year",
@@ -19,8 +19,11 @@ mlcvi_get_panel(
 \item{pairs}{A data frame with the two country-code columns named by
 \code{iso1} and \code{iso2} (ISO alpha-3), and optionally a year column.}
 
-\item{method}{Character; one of \code{"MLCVI"}, \code{"KS"}, or
-\code{"Shulgin"}. Case-insensitive.}
+\item{method}{Character; one of \code{"MLCVI"}, \code{"KS"},
+\code{"Shulgin"}, or \code{"matrix"}. Case-insensitive. \code{"matrix"}
+looks up a user-supplied square table passed as \code{data} (for
+example the output of \code{\link{mlcvi_build_matrix}}) and carries no
+method label of its own.}
 
 \item{iso1, iso2}{Names of the country-code columns in \code{pairs}.}
 
@@ -31,7 +34,8 @@ mlcvi_get_panel(
 \code{"static"} is currently implemented.}
 
 \item{data}{Optional custom table overriding the packaged one, with the
-same structure as for \code{\link{mlcvi.get.distance}}.}
+same structure as for \code{\link{mlcvi.get.distance}}. Required when
+\code{method = "matrix"}.}
 
 \item{ks_dims}{For \code{method = "KS"}: \code{"6dims"} (default) or
 \code{"4dims"}.}
@@ -73,6 +77,11 @@ mlcvi_get_panel(pairs, method = "KS", ks_dims = "4dims")
 trade <- data.frame(origin = "USA", dest = c("JPN", "DEU"), yr = 2000)
 mlcvi_get_panel(trade, method = "MLCVI", iso1 = "origin", iso2 = "dest",
                 year = "yr", data = MLCVI_distance_matrix)
+
+# A matrix built from a custom item set, looked up as-is
+small <- mlcvi:::mlcvi_train_input(small = TRUE)
+m <- mlcvi_build_matrix(mlcvi_items_default[1:10], data = small, min_n = 20)
+mlcvi_get_panel(pairs, method = "matrix", data = m)
 }
 \seealso{
 [mlcvi.get.distance()] for single pairs with a printed report,
