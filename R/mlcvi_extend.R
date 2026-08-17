@@ -47,9 +47,7 @@ mlcvi_extend <- function(country_scores,
     train_input_matrix <- mlcvi_train_input()
   }
   if (is.null(country_vec)) {
-    tom <- mlcvi::train_output_matrix
-    cidx <- max.col(tom, ties.method = "first")
-    country_vec <- factor(colnames(tom)[cidx], levels = colnames(tom))
+    country_vec <- .default_country_vec(train_input_matrix)
   }
   if (is.null(feature_names)) {
     feature_names <- mlcvi::mlcvi_items_default
@@ -200,9 +198,7 @@ mlcvi_ridge_model <- function(country_scores,
     train_input_matrix <- mlcvi_train_input()
   }
   if (is.null(country_vec)) {
-    tom <- mlcvi::train_output_matrix
-    cidx <- max.col(tom, ties.method = "first")
-    country_vec <- factor(colnames(tom)[cidx], levels = colnames(tom))
+    country_vec <- .default_country_vec(train_input_matrix)
   }
   if (is.null(feature_names))  feature_names  <- mlcvi::mlcvi_items_default
   if (is.null(feature_weights)) feature_weights <- mlcvi::mlcvi_weights_default
@@ -260,6 +256,27 @@ mlcvi_ridge_model <- function(country_scores,
                metric = metric, maximize = metric_maximize(metric))
 }
 
+
+#' Default country membership for a training matrix
+#'
+#' Derives the country factor from the one-hot output matrix. When the input
+#' matrix is a subsample carrying a \code{row_indices} attribute (as the
+#' bundled small matrix does), the output matrix is subset accordingly.
+#' @noRd
+.default_country_vec <- function(train_input_matrix) {
+  tom <- mlcvi::train_output_matrix
+  ri  <- attr(train_input_matrix, "row_indices")
+  if (!is.null(ri)) {
+    tom <- tom[ri, , drop = FALSE]
+  }
+  if (nrow(tom) != nrow(train_input_matrix)) {
+    stop("Cannot derive 'country_vec': train_input_matrix has ",
+         nrow(train_input_matrix), " rows but the built-in output matrix has ",
+         nrow(tom), ". Supply 'country_vec' explicitly.")
+  }
+  cidx <- max.col(tom, ties.method = "first")
+  factor(colnames(tom)[cidx], levels = colnames(tom))
+}
 
 #' Aggregate individual data to country means
 #' @noRd
