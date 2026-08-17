@@ -35,17 +35,27 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
-#' # Using a data.frame already in memory:
-#' out <- mlcvi.get.mediator(df = mydata, iv = "US0IN1", dv = "envavg")
+#' # Study 4a: US (0) vs India (1) on environmental behaviour, 60 ML-CVI items
+#' out <- mlcvi.get.mediator(df = MLCVI_4A, iv = "US0IN1", dv = "envavg")
 #' out$significant_items
 #' head(out$results, 10)
 #'
-#' # Using an Excel file (requires readxl installed):
-#' out <- mlcvi.get.mediator(
-#'   path = "Study 4a_Data.xlsx", iv = "US0IN1", dv = "envavg"
-#' )
+#' # Study 3a: items are stored as abc1..abc60 and picked up by the fallback
+#' out3 <- mlcvi.get.mediator(df = MLCVI_3A, iv = "US0Mex1", dv = "covidavg")
+#' out3$meta$n_mediators
+#'
+#' # Screen a subset of mediators explicitly
+#' sub <- mlcvi.get.mediator(df = MLCVI_4A, iv = "US0IN1", dv = "envavg",
+#'                           mediator_names = c("mlcvi1", "mlcvi2", "mlcvi3"),
+#'                           require_exact_count = FALSE)
+#' sub$results
+#'
+#' # Reading from an Excel file instead of a data.frame:
+#' \dontrun{
+#' out <- mlcvi.get.mediator(path = "Study 4a_Data.xlsx",
+#'                           iv = "US0IN1", dv = "envavg")
 #' }
+#' @seealso [mlcvi.get.distance()], [MLCVI_4A], [MLCVI_3A]
 #' @export
 mlcvi.get.mediator <- function(df = NULL,
                                path = NULL,

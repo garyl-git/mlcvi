@@ -23,10 +23,15 @@ mlcvi_extend(
 country code) and \code{values} (numeric, NA for countries to predict).}
 
 \item{train_input_matrix}{A numeric matrix of individual-level WVS
-responses. Defaults to the built-in data.}
+responses. Defaults to the full ML-CVI training matrix, which is
+downloaded once and cached on first use (about 280 MB); see Details.
+Pass \code{mlcvi:::mlcvi_train_input(small = TRUE)} for a bundled
+subsample suitable for quick experiments.}
 
 \item{country_vec}{A factor vector of length nrow(train_input_matrix)
-with levels like "s003_032".}
+with levels like "s003_032". If NULL, it is derived from the built-in
+output matrix (respecting a \code{row_indices} attribute on subsampled
+input).}
 
 \item{feature_names}{Character vector of predictor column names.
 Defaults to built-in 60 ML-CVI items.}
@@ -58,4 +63,33 @@ observed) country-level indicator, this function aggregates individual
 responses to country means, trains a Ridge regression whose penalty
 weights reflect ML-CVI feature importances, and predicts (imputes)
 the indicator for countries that are missing.
+}
+\details{
+The full training matrix is not shipped inside the package. On first use
+it is downloaded from the location given by
+\code{getOption("mlcvi.train_url")} or the \code{MLCVI_TRAIN_URL}
+environment variable and cached under
+\code{tools::R_user_dir("mlcvi", "cache")}. Later calls read the cache.
+}
+\examples{
+# A country-level indicator observed for most countries, missing for a few
+codes  <- sub("^s003_", "", colnames(train_output_matrix))
+set.seed(1)
+scores <- data.frame(s003 = codes, values = rnorm(length(codes)))
+scores$values[1:3] <- NA
+
+# Fast run on the bundled subsample with a fixed lambda
+small <- mlcvi:::mlcvi_train_input(small = TRUE)
+out <- mlcvi_extend(scores, train_input_matrix = small, lambda = 0.1,
+                    repeats = 1L, verbose = FALSE)
+head(out)
+out[out$s003 \%in\% codes[1:3], ]
+
+\dontrun{
+# Full training data and Bayesian optimisation of lambda (slow)
+out <- mlcvi_extend(scores)
+}
+}
+\seealso{
+[mlcvi_ridge_model()], [mlcvi.get.distance()]
 }

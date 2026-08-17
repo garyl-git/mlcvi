@@ -23,10 +23,15 @@ mlcvi_ridge_model(
 country code) and \code{values} (numeric, NA for countries to predict).}
 
 \item{train_input_matrix}{A numeric matrix of individual-level WVS
-responses. Defaults to the built-in data.}
+responses. Defaults to the full ML-CVI training matrix, which is
+downloaded once and cached on first use (about 280 MB); see Details.
+Pass \code{mlcvi:::mlcvi_train_input(small = TRUE)} for a bundled
+subsample suitable for quick experiments.}
 
 \item{country_vec}{A factor vector of length nrow(train_input_matrix)
-with levels like "s003_032".}
+with levels like "s003_032". If NULL, it is derived from the built-in
+output matrix (respecting a \code{row_indices} attribute on subsampled
+input).}
 
 \item{feature_names}{Character vector of predictor column names.
 Defaults to built-in 60 ML-CVI items.}
@@ -52,5 +57,18 @@ Default 50.}
 A train object from the caret package.
 }
 \description{
-Train an ML-CVI Ridge model
+Fits the same weighted Ridge regression used by [mlcvi_extend()] and
+returns the fitted caret model instead of imputed values.
+}
+\examples{
+codes  <- sub("^s003_", "", colnames(train_output_matrix))
+set.seed(1)
+scores <- data.frame(s003 = codes, values = rnorm(length(codes)))
+small  <- mlcvi:::mlcvi_train_input(small = TRUE)
+fit <- mlcvi_ridge_model(scores, train_input_matrix = small, lambda = 0.1,
+                         repeats = 1L, verbose = FALSE)
+fit$results[, c("lambda", "RMSE", "MedAE")]
+}
+\seealso{
+[mlcvi_extend()]
 }

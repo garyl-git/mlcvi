@@ -31,9 +31,24 @@
 #'   }
 #'
 #' @examples
-#' \dontrun{
+#' # Kogut-Singh index on Hofstede's four and six dimensions
 #' mlcvi.get.distance("USA", "JPN", method = "KS")
-#' }
+#'
+#' # Shulgin and ML-CVI lookups
+#' mlcvi.get.distance("USA", "JPN", method = "Shulgin")
+#' mlcvi.get.distance("USA", "JPN", method = "MLCVI")
+#'
+#' # Return values are lists; suppress the printed report with verbose = FALSE
+#' res <- mlcvi.get.distance("DEU", "CHN", method = "MLCVI", verbose = FALSE)
+#' res$MLCVI$value
+#'
+#' # Unknown codes are reported in $error rather than raising an error
+#' res <- mlcvi.get.distance("USA", "XXX", method = "KS", verbose = FALSE)
+#' res$KS_4dims$error
+#'
+#' # Custom data can override the packaged table
+#' mlcvi.get.distance("USA", "JPN", method = "KS", data = Hofstede_dims)
+#' @seealso [mlcvi.get.mediator()], [mlcvi_extend()]
 #' @export
 mlcvi.get.distance <- function(code1, code2, method = "KS", digits = 3,
                                data = NULL, verbose = TRUE) {
