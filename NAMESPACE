@@ -2,5 +2,7 @@
 
 export(mlcvi.get.distance)
 export(mlcvi.get.mediator)
+export(mlcvi_build_matrix)
 export(mlcvi_extend)
+export(mlcvi_get_panel)
 export(mlcvi_ridge_model)
