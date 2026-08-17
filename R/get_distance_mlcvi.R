@@ -54,7 +54,7 @@
   # Direct lookup; if your matrix is symmetric, this already covers it
   val <- suppressWarnings(as.numeric(data[from, to]))
   if (is.na(val)) {
-    return(list(value = NA_real_, error = paste0("ERROR (MLCVI): missing value for ", from, "→", to)))
+    return(list(value = NA_real_, error = paste0("ERROR (MLCVI): missing value for ", from, " -> ", to)))
   }
 
   list(value = val, error = NULL)
