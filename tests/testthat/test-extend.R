@@ -80,6 +80,29 @@ test_that("mlcvi_extend errors with too few observed countries", {
   )
 })
 
+test_that("shared preparation validates inputs with named errors", {
+  scores <- make_scores(n_missing = 3)
+  expect_error(.mlcvi_prepare_training(list(a = 1), small),
+               "'country_scores' must be a data frame")
+  expect_error(.mlcvi_prepare_training(scores, small,
+                                       feature_names = c("a001", "a002"),
+                                       feature_weights = 1),
+               "same length")
+  expect_error(.mlcvi_prepare_training(scores, small,
+                                       feature_names = c("a001", "ghost"),
+                                       feature_weights = c(1, 1)),
+               "not columns of train_input_matrix: ghost")
+  expect_error(.mlcvi_prepare_training(scores, small,
+                                       country_vec = factor("x")),
+               "one entry per row")
+
+  prep <- .mlcvi_prepare_training(scores, small)
+  expect_named(prep, c("X_mat", "y_vec", "penalty", "df_agg", "observed",
+                       "feature_names"))
+  expect_equal(nrow(prep$X_mat), sum(!is.na(scores$values)))
+  expect_length(prep$penalty, length(mlcvi_items_default))
+})
+
 test_that("mlcvi_ridge_model returns a caret train object with the given lambda", {
   scores <- make_scores(n_missing = 3)
   fit <- mlcvi_ridge_model(scores, train_input_matrix = small, lambda = 0.1,
