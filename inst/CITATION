@@ -1,8 +1,16 @@
+citHeader("To cite the mlcvi package in publications use:")
+
 bibentry(
-  bibtype  = "Article",
-  title    = "Machine Learning-Based Cultural Values Inventory (ML-CVI)",
-  author   = person("Gary", "Leng"),
-  journal  = "Journal of Statistical Software",
-  year     = format(Sys.Date(), "%Y"),
-  note     = "in preparation"
+  bibtype = "Manual",
+  title   = "Machine learning-based cultural values inventory (MLCVI) R package user guide",
+  author  = c(person("Gary", "Leng"), person("Abhishek", "Sheetal")),
+  year    = "2025",
+  note    = "R package version 0.3.1",
+  url     = "https://doi.org/10.31235/osf.io/73g8z_v1",
+  doi     = "10.31235/osf.io/73g8z_v1",
+  textVersion = paste(
+    "Leng, G., & Sheetal, A. (2025).",
+    "Machine learning-based cultural values inventory (MLCVI) R package user guide.",
+    "SocArXiv. https://doi.org/10.31235/osf.io/73g8z_v1"
+  )
 )
