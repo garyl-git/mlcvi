@@ -1,16 +1,17 @@
 ## Test environments
 
-TODO (filled in by the pre-flight run; see dev/cran-preflight.md for the
-raw results):
-
-* local: macOS (Darwin 24.4), R 4.5.x -- `R CMD check --as-cran`: 0 errors,
-  0 warnings, 0 notes
-* rhub v2: linux (R-devel), macos (R-release), windows (R-release / R-devel)
-* win-builder: R-devel and R-release
+* local macOS 15 (arm64), R 4.5.1: `R CMD check --as-cran` with PDF/HTML
+  manual and CRAN incoming checks
+* R-hub v2: linux (Ubuntu, R-devel), macos-arm64 (R-devel),
+  windows (R-devel), plus the `donttest` and `nosuggests` configurations
+* win-builder: R-devel and R-release (TODO: paste results)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes locally.
+0 errors | 0 warnings | 0 notes locally and on all three R-hub platforms.
+The R-hub `nosuggests` configuration fails only at re-building the
+vignette because rmarkdown is not installed there; examples and tests pass
+without any suggested package.
 
 On CRAN incoming checks we expect one NOTE, "New submission", and possibly
 "Possibly misspelled words in DESCRIPTION" for the proper nouns Hofstede,
