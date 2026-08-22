@@ -9,3 +9,9 @@
 ^inst/extdata/train_input_matrix\.rds$
 ^doc$
 ^Meta$
+^dev$
+^cran-comments\.md$
+^_pkgdown\.yml$
+^\.github$
+^pkgdown$
+^CRAN-SUBMISSION$

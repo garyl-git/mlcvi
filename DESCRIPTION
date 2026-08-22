@@ -1,39 +1,52 @@
 Package: mlcvi
 Type: Package
-Title: Machine Learning-Based Cultural Values Inventory (ML-CVI)
-Version: 0.3.1.9000
+Title: Machine Learning-Based Cultural Values Inventory
+Version: 1.0.0
 Authors@R: c(
-    person(
-      "Gary", "Leng",
-      email = "gary-h.leng@polyu.edu.hk",
-      role = c("aut", "cre")
-    )
+    person("Gary", "Leng",
+           email = "gary-h.leng@polyu.edu.hk",
+           role = c("aut", "cre"),
+           comment = c(ORCID = "TODO-confirm-or-remove")),
+    person("Abhishek", "Sheetal",
+           role = "aut",
+           comment = c(ORCID = "TODO-confirm-or-remove",
+                       note = "TODO: confirm role (aut vs ctb) and whether a cph entry is needed"))
   )
-Description: Implements the machine learning-based cultural values inventory
-    (ML-CVI) for cross-cultural research. Provides tools for computing cultural
-    distance between countries via the Kogut-Singh, Shulgin, and ML-CVI methods,
-    screening cultural value mediators using Sobel tests, and imputing
-    missing country-level indicators via Ridge regression weighted by
-    ML-CVI feature importances.
+Description: Tools for cross-cultural research built around the machine
+    learning-based cultural values inventory (ML-CVI) of Leng and Sheetal
+    (2025) <doi:10.31235/osf.io/73g8z_v1>: cultural distance between
+    countries by the Kogut and Singh (1988) <doi:10.1057/palgrave.jibs.8490394>
+    index on Hofstede's dimensions, by a published Shulgin table, and by the
+    ML-CVI distance matrix; vectorised lookups for dyadic panel data; Sobel
+    (1982) mediation screens of the sixty ML-CVI items; imputation of missing
+    country-level indicators by Ridge regression weighted by ML-CVI feature
+    importances; and classical distance matrices (Kogut-Singh style,
+    Euclidean, Mahalanobis as in Berry, Guillen and Zhou (2010)
+    <doi:10.1057/jibs.2010.28>) from user-chosen World Values Survey items,
+    pooled or per survey wave.
 License: GPL (>= 3)
-URL: https://doi.org/10.31235/osf.io/73g8z_v1
+URL: https://github.com/garyl-git/mlcvi, https://doi.org/10.31235/osf.io/73g8z_v1, https://osf.io/3csbz/
+BugReports: https://github.com/garyl-git/mlcvi/issues
 Encoding: UTF-8
+Language: en-US
 LazyData: true
 LazyDataCompression: xz
 RoxygenNote: 7.3.3
 Depends: 
-    R (>= 4.1.0)
+    R (>= 4.0.0)
 Imports:
     caret,
     glmnet,
     rBayesianOptimization,
-    readxl,
     stats,
     tools,
     utils
 Suggests: 
+    curl,
     knitr,
+    readxl,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 Config/testthat/edition: 3
 VignetteBuilder: knitr
