@@ -129,3 +129,14 @@ test_that("functions needing the full matrix stop clearly when it is unavailable
                "not available")
   expect_error(mlcvi_build_matrix("a001"), "not available")
 })
+
+test_that("the OSF resource is reachable (HEAD only; skipped on CRAN and offline)", {
+  skip_on_cran()
+  skip_if_offline("osf.io")
+  skip_if_not_installed("curl")
+  h <- curl::new_handle(nobody = TRUE, followlocation = TRUE)
+  res <- curl::curl_fetch_memory(.mlcvi_train_url_default, handle = h)
+  expect_equal(res$status_code, 200L)
+  len <- curl::parse_headers_list(res$headers)[["content-length"]]
+  if (!is.null(len)) expect_equal(as.numeric(len), 280617660)
+})
