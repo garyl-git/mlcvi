@@ -7,6 +7,12 @@
 \format{
 A data frame with one row per country.
 }
+\source{
+Hofstede's published national dimension scores, as distributed
+  with the package in \code{inst/extdata/Hofstede_scores_updated.csv}.
+  Provenance and permission status are recorded in
+  \code{system.file("COPYRIGHTS", package = "mlcvi")}.
+}
 \usage{
 Hofstede_dims
 }

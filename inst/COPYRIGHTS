@@ -1,0 +1,142 @@
+COPYRIGHTS AND PROVENANCE OF THE DATA DISTRIBUTED WITH OR BY THE mlcvi PACKAGE
+=============================================================================
+
+This file lists every dataset bundled in the package (data/, inst/extdata/)
+and the one file fetched on demand from OSF, with what is known about its
+source, how it was derived, and its license or permission status.
+Entries marked UNKNOWN could not be verified from the package sources or
+the authors' public OSF archive and must be cleared before release.
+
+Package code: GPL (>= 3), copyright the package authors (see DESCRIPTION).
+
+-----------------------------------------------------------------------------
+1. Hofstede_dims  (data/Hofstede_dims.rda; inst/extdata/Hofstede_scores_updated.csv)
+-----------------------------------------------------------------------------
+Content:    National scores on Hofstede's six cultural dimensions (pdi, idv,
+            mas, uai, ltowvs, ivr) for 111 entries, with ISO alpha-3 codes.
+Source:     Hofstede's published national dimension scores. The CSV was
+            supplied to the package by the authors; the exact release/version
+            and download date are UNKNOWN.
+Derivation: None beyond ISO code cleaning (data-raw/make_hofstede_data.R).
+Rights:     Hofstede's dimension data are published by Geert Hofstede BV /
+            Hofstede Insights. Redistribution terms: UNKNOWN. Permission to
+            redistribute in this package: UNKNOWN.
+
+-----------------------------------------------------------------------------
+2. Shulgin_csv  (data/Shulgin_csv.rda; inst/extdata/Shulgin.csv)
+-----------------------------------------------------------------------------
+Content:    60 x 60 table of pairwise values between countries (ISO alpha-3).
+            Note: the table is not symmetric (98% of cells differ from their
+            transpose) and its diagonal is non-zero; whether it is a
+            directional measure by design or was mis-constructed is UNKNOWN.
+Source:     UNKNOWN. The package documents it as "Shulgin et al." but no
+            reference, DOI, or file origin is recorded anywhere in the
+            repository or the OSF archive.
+Derivation: ISO code cleaning and numeric coercion (data-raw/make_shulgin_data.R).
+Rights:     UNKNOWN.
+
+-----------------------------------------------------------------------------
+3. MLCVI_distance_matrix  (data/MLCVI_distance_matrix.rda; inst/extdata/MLCVI_distance_matrix.rds)
+-----------------------------------------------------------------------------
+Content:    98 x 98 symmetric matrix of ML-CVI cultural distances, zero
+            diagonal, ISO alpha-3 dimnames.
+Source:     Produced by the package authors from the ML-CVI model.
+Derivation: Computed from the country-level ML-CVI values (OSF archive
+            fmduv, "Study 1_MLCVI Values_by_country.xlsx", 98 countries x 60
+            items). The script and distance metric that turn those values
+            into this matrix are not in the repository or the OSF archive:
+            UNKNOWN (requested from the authors).
+Rights:     Package authors. Underlying survey data: see entry 9.
+
+-----------------------------------------------------------------------------
+4. MLCVI_3A, MLCVI_4A  (data/MLCVI_3A.rda, data/MLCVI_4A.rda; data-raw/Study 3a_Data.xlsx, Study 4a_Data.xlsx)
+-----------------------------------------------------------------------------
+Content:    Individual-level questionnaire responses: Study 3a (201
+            respondents, US vs Mexico, COVID outcomes) and Study 4a (208
+            respondents, US vs India, environmental behaviour), including the
+            60 ML-CVI items, several published scales, and demographics.
+Source:     Surveys run by the package authors; also posted in the authors'
+            public OSF archive (osf.io/fmduv, folders "Study 3a", "Study 4a").
+Derivation: Read from the Excel files by data-raw/make_study_datasets.R.
+Rights:     Package authors. Ethics approval reference, consent terms for
+            public data sharing, and whether the demographic columns are
+            sufficiently de-identified for CRAN distribution: UNKNOWN.
+
+-----------------------------------------------------------------------------
+5. mlcvi_items_default, mlcvi_weights_default  (data/*.rda)
+-----------------------------------------------------------------------------
+Content:    The 60 World Values Survey variable names of the ML-CVI scale and
+            their dropout-loss importance weights.
+Source:     ML-CVI training pipeline (OSF archive fmduv, MLScripts
+            1.3.world_values_analysis.R, DALEX variable_importance); the item
+            list equals the first 60 entries of
+            Intermediary_files/ABCD_features.txt in that archive.
+Derivation: As above; no further processing in this package.
+Rights:     Package authors (derived quantities). Variable names are WVS
+            codebook identifiers.
+
+-----------------------------------------------------------------------------
+6. preProcessModel_default  (data/preProcessModel_default.rda)
+-----------------------------------------------------------------------------
+Content:    caret preProcess object (method = "range") fitted on the ML-CVI
+            training matrix.
+Source:     ML-CVI training pipeline (OSF archive fmduv, MLScripts
+            1.2.world_values_model_building.R).
+Rights:     Package authors.
+
+-----------------------------------------------------------------------------
+7. train_output_matrix  (data/train_output_matrix.rda)
+-----------------------------------------------------------------------------
+Content:    313,856 x 98 one-hot matrix of respondent country (columns
+            s003_<ISO 3166-1 numeric code>).
+Source:     World Values Survey country variable s003 for the ML-CVI training
+            sample; produced by MLScripts 1.2 in the OSF archive.
+Rights:     Derived from WVS data; see entry 9 for the WVS terms question.
+
+-----------------------------------------------------------------------------
+8. wvs_country_codes  (data/wvs_country_codes.rda)
+-----------------------------------------------------------------------------
+Content:    98 rows mapping WVS numeric country codes (ISO 3166-1 numeric)
+            to ISO 3166-1 alpha-3 codes and English names.
+Source:     ISO 3166-1 table from the CRAN package ISOcodes (data-raw/
+            make_country_codes.R), itself derived from the Debian iso-codes
+            project.
+Rights:     ISOcodes is GPL-2 | GPL-3; the iso-codes data are LGPL-2.1.
+            Redistributing 98 code/name pairs is within those terms.
+
+-----------------------------------------------------------------------------
+9. ML-CVI training matrix  (inst/extdata/train_input_matrix_small.rds, bundled;
+   train_input_matrix.rds, 280,617,660 bytes, fetched from https://osf.io/download/st3hd/
+   in OSF project https://osf.io/3csbz/, MD5 81ad00e3cf1d5a6c28603ac3cc9fbc6b)
+-----------------------------------------------------------------------------
+Content:    Full matrix: 313,856 respondents x 594 variables (582 WVS items
+            plus one-hot wave indicators s002_1..s002_6 and six derived
+            *_co columns), values min-max scaled to [0, 1], no missing
+            values. Bundled subsample: 2,450 rows (25 per country) drawn from
+            the full matrix, with a row_indices attribute.
+Source:     World Values Survey longitudinal file, release dated 2019-04-29
+            (WorldValuesSurvey20190429.dta), waves 1-6, 98 countries, per
+            MLScripts 1.1 in the OSF archive.
+Derivation: (MLScripts 1.1) negative WVS codes set to missing; variables
+            dropped/one-hot encoded per Variables_to_keep_2019-11-05.xlsx;
+            90/10 train/unseen split (caTools::sample.split, seed 101);
+            missing values imputed with missRanger (100 trees, 15
+            iterations, extratrees split rule). (MLScripts 1.2) variables
+            dropped per Delete_Before_ABCD; caret preProcess "range" scaling.
+            The distributed matrix is therefore an IMPUTED and RESCALED
+            derivative of WVS microdata, not the raw survey responses.
+            The subsample was drawn by the package authors (script not in the
+            repository: UNKNOWN).
+Rights:     WVS data are provided by the World Values Survey Association
+            under its data-use conditions (registration, citation, no
+            redistribution of the original files is the usual condition).
+            Whether redistribution of an imputed, rescaled, respondent-level
+            derivative (bundled subsample and OSF file) is permitted under
+            the WVS conditions applicable to the 2019-04-29 release: UNKNOWN.
+            This must be confirmed with the WVS Association or replaced by
+            country-level aggregates before release.
+
+-----------------------------------------------------------------------------
+Citation for the ML-CVI work: Leng, G., & Sheetal, A. (2025). Machine
+learning-based cultural values inventory (MLCVI) R package user guide.
+SocArXiv. https://doi.org/10.31235/osf.io/73g8z_v1

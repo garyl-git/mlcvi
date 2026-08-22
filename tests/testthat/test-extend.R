@@ -122,3 +122,16 @@ test_that("make_ridge_method builds a caret method list", {
   expect_equal(m$library, "glmnet")
   expect_equal(m$grid(NULL, NULL)$lambda, 0.01)
 })
+
+test_that("fitting leaves the caller's random-number stream untouched", {
+  scores <- make_scores(n_missing = 2)
+  set.seed(42)
+  before <- .Random.seed
+  mlcvi_extend(scores, train_input_matrix = small, lambda = 0.1,
+               repeats = 1L, verbose = FALSE)
+  expect_identical(.Random.seed, before)
+  rm(".Random.seed", envir = globalenv())
+  mlcvi_ridge_model(scores, train_input_matrix = small, lambda = 0.1,
+                    repeats = 1L, verbose = FALSE)
+  expect_false(exists(".Random.seed", envir = globalenv(), inherits = FALSE))
+})

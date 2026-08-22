@@ -7,6 +7,10 @@
 \format{
 Numeric vector of length 60.
 }
+\source{
+Dropout-loss variable importances from the ML-CVI model; see
+  \code{system.file("COPYRIGHTS", package = "mlcvi")}.
+}
 \usage{
 mlcvi_weights_default
 }

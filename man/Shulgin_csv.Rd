@@ -7,6 +7,11 @@
 \format{
 A data frame with ISO alpha-3 country codes as row and column names.
 }
+\source{
+As distributed with the package in
+  \code{inst/extdata/Shulgin.csv}; see
+  \code{system.file("COPYRIGHTS", package = "mlcvi")}.
+}
 \usage{
 Shulgin_csv
 }

@@ -7,6 +7,11 @@
 \format{
 A numeric matrix.
 }
+\source{
+Derived from the World Values Survey country variable (s003) of
+  the ML-CVI training sample; see
+  \code{system.file("COPYRIGHTS", package = "mlcvi")}.
+}
 \usage{
 train_output_matrix
 }

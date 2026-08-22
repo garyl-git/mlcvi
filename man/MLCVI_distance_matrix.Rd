@@ -7,6 +7,10 @@
 \format{
 A numeric matrix with ISO alpha-3 country codes as row and column names.
 }
+\source{
+Derived by the package authors from the ML-CVI model; see
+  \code{system.file("COPYRIGHTS", package = "mlcvi")}.
+}
 \usage{
 MLCVI_distance_matrix
 }

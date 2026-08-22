@@ -7,6 +7,10 @@
 \format{
 A data frame.
 }
+\source{
+Survey data collected by the package authors (Study 4a of the
+  ML-CVI project); see \code{system.file("COPYRIGHTS", package = "mlcvi")}.
+}
 \usage{
 MLCVI_4A
 }

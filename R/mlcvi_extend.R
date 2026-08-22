@@ -213,6 +213,7 @@ mlcvi_ridge_model <- function(country_scores,
 #' @noRd
 .mlcvi_fit_ridge <- function(prep, lambda, metric, repeats, n_iter, seed,
                              verbose) {
+  .restore_rng_on_exit()
   ridge_method <- make_ridge_method(prep$penalty)
   X_mat <- prep$X_mat
   y_vec <- prep$y_vec
@@ -316,3 +317,20 @@ mlcvi_ridge_model <- function(country_scores,
   agg
 }
 
+
+
+# Leave the caller's random-number stream as it was found. The fitting code
+# calls set.seed() for reproducibility; this undoes the side effect.
+.restore_rng_on_exit <- function(envir = parent.frame()) {
+  had_seed <- exists(".Random.seed", envir = globalenv(), inherits = FALSE)
+  old_seed <- if (had_seed) get(".Random.seed", envir = globalenv()) else NULL
+  expr <- if (had_seed) {
+    quote(assign(".Random.seed", old_seed, envir = globalenv()))
+  } else {
+    quote(if (exists(".Random.seed", envir = globalenv(), inherits = FALSE))
+      rm(".Random.seed", envir = globalenv()))
+  }
+  assign("old_seed", old_seed, envir = envir)
+  do.call(on.exit, list(expr, add = TRUE), envir = envir)
+  invisible(NULL)
+}

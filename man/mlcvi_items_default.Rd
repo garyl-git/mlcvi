@@ -7,6 +7,11 @@
 \format{
 Character vector of length 60.
 }
+\source{
+The 60 highest-ranked World Values Survey variables from the
+  ML-CVI feature ranking; see
+  \code{system.file("COPYRIGHTS", package = "mlcvi")}.
+}
 \usage{
 mlcvi_items_default
 }

@@ -7,6 +7,10 @@
 \format{
 A preProcess object from the caret package.
 }
+\source{
+Fitted by the package authors on the ML-CVI training data; see
+  \code{system.file("COPYRIGHTS", package = "mlcvi")}.
+}
 \usage{
 preProcessModel_default
 }
