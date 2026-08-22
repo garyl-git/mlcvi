@@ -6,18 +6,17 @@ Authors@R: c(
     person("Gary", "Leng",
            email = "gary-h.leng@polyu.edu.hk",
            role = c("aut", "cre"),
-           comment = c(ORCID = "TODO-confirm-or-remove")),
+           comment = c(note = "TODO: add ORCID if available")),
     person("Abhishek", "Sheetal",
            role = "aut",
-           comment = c(ORCID = "TODO-confirm-or-remove",
-                       note = "TODO: confirm role (aut vs ctb) and whether a cph entry is needed"))
+           comment = c(note = "TODO: confirm role (aut vs ctb), add ORCID, and decide whether a cph entry is needed"))
   )
 Description: Tools for cross-cultural research built around the machine
     learning-based cultural values inventory (ML-CVI) of Leng and Sheetal
     (2025) <doi:10.31235/osf.io/73g8z_v1>: cultural distance between
     countries by the Kogut and Singh (1988) <doi:10.1057/palgrave.jibs.8490394>
     index on Hofstede's dimensions, by a published Shulgin table, and by the
-    ML-CVI distance matrix; vectorised lookups for dyadic panel data; Sobel
+    ML-CVI distance matrix; vectorized lookups for dyadic panel data; Sobel
     (1982) mediation screens of the sixty ML-CVI items; imputation of missing
     country-level indicators by Ridge regression weighted by ML-CVI feature
     importances; and classical distance matrices (Kogut-Singh style,

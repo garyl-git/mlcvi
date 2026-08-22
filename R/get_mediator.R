@@ -35,7 +35,7 @@
 #' }
 #'
 #' @examples
-#' # Study 4a: US (0) vs India (1) on environmental behaviour, 60 ML-CVI items
+#' # Study 4a: US (0) vs India (1) on environmental behavior, 60 ML-CVI items
 #' out <- mlcvi.get.mediator(df = MLCVI_4A, iv = "US0IN1", dv = "envavg")
 #' out$significant_items
 #' head(out$results, 10)

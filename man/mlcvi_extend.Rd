@@ -40,9 +40,9 @@ Defaults to built-in 60 ML-CVI items.}
 feature_names). Defaults to built-in ML-CVI dropout-loss weights.}
 
 \item{lambda}{Optional fixed Ridge lambda. If NULL (default), Bayesian
-Optimisation is used.}
+Optimization is used.}
 
-\item{metric}{Character. The caret metric to optimise. Default "MedAE".}
+\item{metric}{Character. The caret metric to optimize. Default "MedAE".}
 
 \item{repeats}{Integer. Repeated-CV repeats. Default 50.}
 
@@ -68,7 +68,7 @@ the indicator for countries that are missing.
 The full training matrix is not shipped inside the package. On first use
 it is downloaded from OSF and cached for the session or, with your
 consent, across sessions; \code{\link{mlcvi_training_data}} documents
-the locations, the opt-in, and the offline behaviour. If the download is
+the locations, the opt-in, and the offline behavior. If the download is
 not possible this function stops with a message; pass a matrix via
 \code{train_input_matrix} instead.
 }
@@ -87,7 +87,7 @@ head(out)
 out[out$s003 \%in\% codes[1:3], ]
 
 \dontrun{
-# Full training data and Bayesian optimisation of lambda (slow)
+# Full training data and Bayesian optimization of lambda (slow)
 out <- mlcvi_extend(scores)
 }
 }

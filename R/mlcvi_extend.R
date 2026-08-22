@@ -23,8 +23,8 @@
 #' @param feature_weights Numeric importance weights (same length as
 #'   feature_names). Defaults to built-in ML-CVI dropout-loss weights.
 #' @param lambda Optional fixed Ridge lambda. If NULL (default), Bayesian
-#'   Optimisation is used.
-#' @param metric Character. The caret metric to optimise. Default "MedAE".
+#'   Optimization is used.
+#' @param metric Character. The caret metric to optimize. Default "MedAE".
 #' @param repeats Integer. Repeated-CV repeats. Default 50.
 #' @param n_iter Integer. BO iterations (ignored when lambda is supplied).
 #'   Default 50.
@@ -38,7 +38,7 @@
 #' The full training matrix is not shipped inside the package. On first use
 #' it is downloaded from OSF and cached for the session or, with your
 #' consent, across sessions; \code{\link{mlcvi_training_data}} documents
-#' the locations, the opt-in, and the offline behaviour. If the download is
+#' the locations, the opt-in, and the offline behavior. If the download is
 #' not possible this function stops with a message; pass a matrix via
 #' \code{train_input_matrix} instead.
 #'
@@ -57,7 +57,7 @@
 #' out[out$s003 %in% codes[1:3], ]
 #'
 #' \dontrun{
-#' # Full training data and Bayesian optimisation of lambda (slow)
+#' # Full training data and Bayesian optimization of lambda (slow)
 #' out <- mlcvi_extend(scores)
 #' }
 #' @seealso [mlcvi_ridge_model()], [mlcvi.get.distance()]
@@ -208,7 +208,7 @@ mlcvi_ridge_model <- function(country_scores,
        observed = observed, feature_names = feature_names)
 }
 
-#' Fit the weighted Ridge model, tuning lambda by Bayesian optimisation
+#' Fit the weighted Ridge model, tuning lambda by Bayesian optimization
 #' unless a fixed lambda is supplied
 #' @noRd
 .mlcvi_fit_ridge <- function(prep, lambda, metric, repeats, n_iter, seed,

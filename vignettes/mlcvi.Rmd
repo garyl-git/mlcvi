@@ -78,7 +78,7 @@ for wave-specific tables in a later version.
 `mlcvi.get.mediator()` runs a Sobel test for each of the 60 ML-CVI items as a
 mediator between a binary culture variable and a continuous outcome, adjusts
 the p-values, and reports the significant items. The bundled `MLCVI_4A` data
-compare United States and Indian respondents on environmental behaviour.
+compare United States and Indian respondents on environmental behavior.
 
 ```{r}
 out <- mlcvi.get.mediator(df = MLCVI_4A, iv = "US0IN1", dv = "envavg")
@@ -115,7 +115,7 @@ filled[filled$s003 %in% codes[1:3], ]
 ```
 
 With the defaults (`lambda = NULL`), the penalty is tuned by Bayesian
-optimisation over repeated cross-validation; `mlcvi_ridge_model()` returns
+optimization over repeated cross-validation; `mlcvi_ridge_model()` returns
 the fitted caret model itself.
 
 ## Distance matrices from custom item sets

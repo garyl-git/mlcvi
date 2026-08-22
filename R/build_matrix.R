@@ -28,7 +28,7 @@
 #' means and returns \code{NA} for any pair involving a missing item.
 #'
 #' These are classical distance constructions on custom items and are
-#' labelled by method. The label "ML-CVI" refers to the published matrix
+#' labeled by method. The label "ML-CVI" refers to the published matrix
 #' \code{\link{MLCVI_distance_matrix}} only.
 #'
 #' @param items Character vector of item (column) names in \code{data}.

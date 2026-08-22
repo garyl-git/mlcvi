@@ -40,9 +40,9 @@ Defaults to built-in 60 ML-CVI items.}
 feature_names). Defaults to built-in ML-CVI dropout-loss weights.}
 
 \item{lambda}{Optional fixed Ridge lambda. If NULL (default), Bayesian
-Optimisation is used.}
+Optimization is used.}
 
-\item{metric}{Character. The caret metric to optimise. Default "MedAE".}
+\item{metric}{Character. The caret metric to optimize. Default "MedAE".}
 
 \item{repeats}{Integer. Repeated-CV repeats. Default 50.}
 

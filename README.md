@@ -25,7 +25,7 @@ mlcvi.get.distance("USA", "JPN", method = "MLCVI")
 
 # Screen the 60 ML-CVI items as mediators between a binary culture IV
 # and a continuous DV (bundled Study 4a data: US vs India, environmental
-# behaviour)
+# behavior)
 out <- mlcvi.get.mediator(df = MLCVI_4A, iv = "US0IN1", dv = "envavg")
 out$significant_items
 head(out$results)
