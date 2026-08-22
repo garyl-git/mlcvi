@@ -134,13 +134,17 @@ test_that("functions needing the full matrix stop clearly when it is unavailable
   expect_error(mlcvi_build_matrix("a001"), "not available")
 })
 
-test_that("the OSF resource is reachable (HEAD only; skipped on CRAN and offline)", {
+test_that("the OSF resource is reachable (opt-in; skipped on CRAN and offline)", {
   skip_on_cran()
   skip_if_offline("osf.io")
   skip_if_not_installed("curl")
-  h <- curl::new_handle(nobody = TRUE, followlocation = TRUE)
+  skip_if_not(identical(tolower(Sys.getenv("MLCVI_NETWORK_TESTS")), "true"),
+              "set MLCVI_NETWORK_TESTS=true to run network tests")
+  # a one-byte ranged GET: OSF's redirect chain answers HEAD inconsistently
+  h <- curl::new_handle(followlocation = TRUE, range = "0-0")
   res <- curl::curl_fetch_memory(.mlcvi_train_url_default, handle = h)
-  expect_equal(res$status_code, 200L)
-  len <- curl::parse_headers_list(res$headers)[["content-length"]]
-  if (!is.null(len)) expect_equal(as.numeric(len), 280617660)
+  expect_true(res$status_code %in% c(200L, 206L))
+  hdr <- curl::parse_headers_list(res$headers)
+  cr <- hdr[["content-range"]]
+  if (!is.null(cr)) expect_equal(as.numeric(sub(".*/", "", cr)), 280617660)
 })
