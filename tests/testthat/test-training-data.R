@@ -73,6 +73,7 @@ test_that("a matching checksum is cached in the resolved directory and reused", 
 })
 
 test_that("non-interactive 'ask' resolves to the session cache", {
+  skip_if_not_installed("withr")
   dirs <- tmp_dirs()
   withr::local_options(list(mlcvi.cache_dir = NULL))
   withr::local_envvar(MLCVI_CACHE_DIR = "")
@@ -84,6 +85,7 @@ test_that("non-interactive 'ask' resolves to the session cache", {
 })
 
 test_that("cache directories honour the override option and env var", {
+  skip_if_not_installed("withr")
   withr::local_options(list(mlcvi.cache_dir = "/custom/dir"))
   expect_identical(.mlcvi_cache_dirs()$persistent, "/custom/dir")
   withr::local_options(list(mlcvi.cache_dir = NULL))
@@ -93,6 +95,7 @@ test_that("cache directories honour the override option and env var", {
 })
 
 test_that("mlcvi_clear_cache removes cached files and reports them", {
+  skip_if_not_installed("withr")
   dirs <- tmp_dirs()
   withr::local_options(list(mlcvi.cache_dir = dirs$persistent))
   dir.create(dirs$persistent, recursive = TRUE)
@@ -115,6 +118,7 @@ test_that("no download location configured returns NULL with a message", {
 })
 
 test_that("functions needing the full matrix stop clearly when it is unavailable", {
+  skip_if_not_installed("withr")
   dirs <- tmp_dirs()
   withr::local_options(list(mlcvi.train_url = "http://127.0.0.1:9/x.rds"))
   skip_on_cran()
