@@ -62,10 +62,12 @@ test_that("bundled distance matrices are well formed", {
 })
 
 test_that("Shulgin and MLCVI verbose reports print", {
-  expect_output(mlcvi.get.distance("USA", "JPN", method = "Shulgin"),
-                "Shulgin method")
-  expect_output(mlcvi.get.distance("USA", "JPN", method = "MLCVI"),
-                "MLCVI method")
+  expect_message(mlcvi.get.distance("USA", "JPN", method = "Shulgin"),
+                 "Shulgin method")
+  expect_message(mlcvi.get.distance("USA", "JPN", method = "MLCVI"),
+                 "MLCVI method")
+  expect_silent(mlcvi.get.distance("USA", "JPN", method = "MLCVI",
+                                   verbose = FALSE))
 })
 
 test_that("method = 'matrix' in mlcvi.get.distance uses the supplied table", {
@@ -81,8 +83,8 @@ test_that("method = 'matrix' in mlcvi.get.distance uses the supplied table", {
   expect_match(bad$matrix$error, "^ERROR \\(matrix\\): country code not found")
   expect_error(mlcvi.get.distance(cn[1], cn[2], method = "matrix"),
                "requires a square table in 'data'")
-  expect_output(mlcvi.get.distance(cn[1], cn[2], method = "matrix", data = m),
-                "user-supplied matrix")
+  expect_message(mlcvi.get.distance(cn[1], cn[2], method = "matrix", data = m),
+                 "user-supplied matrix")
   # MLCVI-path errors keep their own label
   bad2 <- mlcvi.get.distance("USA", "ZZZ", method = "MLCVI", verbose = FALSE)
   expect_match(bad2$MLCVI$error, "^ERROR \\(MLCVI\\)")

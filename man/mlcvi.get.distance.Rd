@@ -78,7 +78,7 @@ res$KS_4dims$error
 mlcvi.get.distance("USA", "JPN", method = "KS", data = Hofstede_dims)
 
 # A user-built matrix, looked up as-is
-small <- mlcvi:::mlcvi_train_input(small = TRUE)
+small <- mlcvi_training_data(small = TRUE)
 m <- mlcvi_build_matrix(mlcvi_items_default[1:10], data = small, min_n = 20)
 mlcvi.get.distance("USA", "JPN", method = "matrix", data = m)
 }

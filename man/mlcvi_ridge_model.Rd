@@ -24,9 +24,9 @@ country code) and \code{values} (numeric, NA for countries to predict).}
 
 \item{train_input_matrix}{A numeric matrix of individual-level WVS
 responses. Defaults to the full ML-CVI training matrix, which is
-downloaded once and cached on first use (about 280 MB); see Details.
-Pass \code{mlcvi:::mlcvi_train_input(small = TRUE)} for a bundled
-subsample suitable for quick experiments.}
+downloaded once and cached on first use (about 280 MB); see
+\code{\link{mlcvi_training_data}}. Pass
+\code{mlcvi_training_data(small = TRUE)} for the bundled subsample.}
 
 \item{country_vec}{A factor vector of length nrow(train_input_matrix)
 with levels like "s003_032". If NULL, it is derived from the built-in
@@ -64,7 +64,7 @@ returns the fitted caret model instead of imputed values.
 codes  <- sub("^s003_", "", colnames(train_output_matrix))
 set.seed(1)
 scores <- data.frame(s003 = codes, values = rnorm(length(codes)))
-small  <- mlcvi:::mlcvi_train_input(small = TRUE)
+small  <- mlcvi_training_data(small = TRUE)
 fit <- mlcvi_ridge_model(scores, train_input_matrix = small, lambda = 0.1,
                          repeats = 1L, verbose = FALSE)
 fit$results[, c("lambda", "RMSE", "MedAE")]

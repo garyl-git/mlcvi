@@ -66,10 +66,9 @@
   fmt <- if (is.null(res$error)) sprintf(paste0("%.", digits, "f"), res$value)
   else paste0("NA\n  ", res$error)
 
-  cat(
+  message(
     "The cultural distance (MLCVI method) between ", from, " and ", to, " is:\n",
-    fmt, "\n",
-    sep = ""
+    fmt
   )
 }
 
@@ -79,9 +78,8 @@
   fmt <- if (is.null(res$error)) sprintf(paste0("%.", digits, "f"), res$value)
   else paste0("NA\n  ", res$error)
 
-  cat(
+  message(
     "The distance (user-supplied matrix) between ", from, " and ", to, " is:\n",
-    fmt, "\n",
-    sep = ""
+    fmt
   )
 }

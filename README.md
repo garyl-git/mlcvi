@@ -38,7 +38,7 @@ mlcvi_get_panel(pairs, method = "MLCVI")
 
 # Build a distance matrix from your own item set (here ten ML-CVI items
 # on the bundled subsample), then use it like any packaged table
-small <- mlcvi:::mlcvi_train_input(small = TRUE)
+small <- mlcvi_training_data(small = TRUE)
 m <- mlcvi_build_matrix(mlcvi_items_default[1:10], data = small, min_n = 20)
 mlcvi_get_panel(pairs, method = "matrix", data = m)
 
@@ -62,7 +62,7 @@ mlcvi_extend(scores, lambda = 0.1, repeats = 5L, verbose = FALSE)
 | `train_output_matrix` | One-hot country membership for the training sample |
 | `wvs_country_codes` | WVS numeric country codes mapped to ISO alpha-3 |
 
-The full individual-level training matrix (about 280 MB) is hosted on OSF (https://osf.io/3csbz/) rather than shipped inside the package. `mlcvi_extend()`, `mlcvi_ridge_model()` and `mlcvi_build_matrix()` download it once on first use, verify its checksum, and cache it under `tools::R_user_dir("mlcvi", "cache")`; later sessions read the cache. Set `options(mlcvi.train_url = ...)` or the `MLCVI_TRAIN_URL` environment variable to point at an alternative source. A subsampled matrix for quick experiments ships with the package: `mlcvi:::mlcvi_train_input(small = TRUE)`.
+The full individual-level training matrix (about 280 MB) is hosted on OSF (https://osf.io/3csbz/) rather than shipped inside the package. `mlcvi_training_data()` fetches it the first time it is needed and verifies its checksum. By default the file is kept only for the current R session (under `tempdir()`); in an interactive session you are asked once whether to keep it across sessions under `tools::R_user_dir("mlcvi", "cache")`, and you can opt in for all sessions with `options(mlcvi.cache = "persistent")` or the `MLCVI_CACHE=persistent` environment variable (or choose a directory with `options(mlcvi.cache_dir = ...)`). `mlcvi_clear_cache()` removes the cached file. If the download is not possible, `mlcvi_training_data()` returns `NULL` with a message and the functions that need the full matrix ask you to pass data explicitly. `mlcvi_training_data(small = TRUE)` returns the bundled subsample (25 respondents per country) that powers the examples and tests.
 
 ## Function naming
 

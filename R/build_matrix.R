@@ -34,8 +34,8 @@
 #' @param items Character vector of item (column) names in \code{data}.
 #' @param data Numeric matrix of individual-level responses, one column per
 #'   item. Defaults to the full ML-CVI training matrix (downloaded once and
-#'   cached on first use). Pass \code{mlcvi:::mlcvi_train_input(small = TRUE)}
-#'   for the bundled subsample.
+#'   cached on first use; see \code{\link{mlcvi_training_data}}). Pass
+#'   \code{mlcvi_training_data(small = TRUE)} for the bundled subsample.
 #' @param country_vec Factor or character vector of length \code{nrow(data)}
 #'   giving each row's country. If \code{NULL}, derived from the built-in
 #'   output matrix and mapped to ISO alpha-3 codes.
@@ -58,7 +58,7 @@
 #'   message.
 #'
 #' @examples
-#' small <- mlcvi:::mlcvi_train_input(small = TRUE)
+#' small <- mlcvi_training_data(small = TRUE)
 #' items <- mlcvi_items_default[1:10]
 #'
 #' # Kogut-Singh style distance on ten ML-CVI items, small subsample
@@ -91,7 +91,14 @@ mlcvi_build_matrix <- function(items,
   if (!is.character(items) || length(items) < 1L) {
     stop("'items' must be a non-empty character vector.")
   }
-  if (is.null(data)) data <- mlcvi_train_input()
+  if (is.null(data)) {
+    data <- mlcvi_train_input()
+    if (is.null(data)) {
+      stop("The full ML-CVI training matrix is not available (see the ",
+           "message above). Pass 'data' explicitly, for example ",
+           "mlcvi_training_data(small = TRUE).", call. = FALSE)
+    }
+  }
   if (!is.matrix(data) || !is.numeric(data)) {
     stop("'data' must be a numeric matrix.")
   }

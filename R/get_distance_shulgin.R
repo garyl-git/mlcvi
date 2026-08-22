@@ -58,9 +58,8 @@
   fmt <- if (is.null(res$error)) sprintf(paste0("%.", digits, "f"), res$value)
   else paste0("NA\n  ", res$error)
 
-  cat(
+  message(
     "The cultural distance (Shulgin method) between ", from, " and ", to, " is:\n",
-    fmt, "\n",
-    sep = ""
+    fmt
   )
 }

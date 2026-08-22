@@ -57,7 +57,7 @@
 #' mlcvi.get.distance("USA", "JPN", method = "KS", data = Hofstede_dims)
 #'
 #' # A user-built matrix, looked up as-is
-#' small <- mlcvi:::mlcvi_train_input(small = TRUE)
+#' small <- mlcvi_training_data(small = TRUE)
 #' m <- mlcvi_build_matrix(mlcvi_items_default[1:10], data = small, min_n = 20)
 #' mlcvi.get.distance("USA", "JPN", method = "matrix", data = m)
 #' @seealso [mlcvi.get.mediator()], [mlcvi_extend()]
@@ -197,10 +197,9 @@ mlcvi.get.distance <- function(code1, code2, method = "KS", digits = 3,
     else paste0("NA\n  ", x$error)
   }
 
-  cat(
+  message(
     "The cultural distance (Kogut-Singh method) between ", code1, " and ", code2, " is:\n",
     "4-dims: ", fmt_val(res$KS_4dims), "\n",
-    "6-dims: ", fmt_val(res$KS_6dims), "\n",
-    sep = ""
+    "6-dims: ", fmt_val(res$KS_6dims)
   )
 }

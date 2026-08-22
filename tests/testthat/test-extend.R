@@ -9,14 +9,16 @@ make_scores <- function(n_missing = 3, seed = 1) {
   data.frame(s003 = codes, values = values, stringsAsFactors = FALSE)
 }
 
-test_that("mlcvi_train_input loads and caches the small matrix", {
+test_that("mlcvi_training_data loads and caches the small matrix", {
   expect_true(is.matrix(small))
   expect_equal(dim(small), c(2450L, 594L))
   expect_true(all(mlcvi_items_default %in% colnames(small)))
   expect_length(attr(small, "row_indices"), 2450L)
-  expect_identical(mlcvi_train_input(small = TRUE), small)
-  expect_error(mlcvi_train_input(small = NA), "single non-missing logical")
-  expect_error(mlcvi_train_input(small = "yes"), "single non-missing logical")
+  expect_identical(mlcvi_training_data(small = TRUE), small)
+  expect_error(mlcvi_training_data(small = NA), "single non-missing logical")
+  expect_error(mlcvi_training_data(small = "yes"), "single non-missing logical")
+  expect_error(mlcvi_training_data(small = TRUE, cache = "forever"),
+               "one of")
 })
 
 test_that(".default_country_vec honours row_indices and validates length", {

@@ -72,7 +72,7 @@ test_that("KS reports missing columns in custom data", {
 })
 
 test_that("verbose = TRUE prints a report and returns invisibly", {
-  expect_output(
+  expect_message(
     out <- withVisible(mlcvi.get.distance("USA", "JPN", method = "KS")),
     "Kogut-Singh method"
   )

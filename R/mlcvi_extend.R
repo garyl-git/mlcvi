@@ -11,9 +11,9 @@
 #'   country code) and \code{values} (numeric, NA for countries to predict).
 #' @param train_input_matrix A numeric matrix of individual-level WVS
 #'   responses. Defaults to the full ML-CVI training matrix, which is
-#'   downloaded once and cached on first use (about 280 MB); see Details.
-#'   Pass \code{mlcvi:::mlcvi_train_input(small = TRUE)} for a bundled
-#'   subsample suitable for quick experiments.
+#'   downloaded once and cached on first use (about 280 MB); see
+#'   \code{\link{mlcvi_training_data}}. Pass
+#'   \code{mlcvi_training_data(small = TRUE)} for the bundled subsample.
 #' @param country_vec A factor vector of length nrow(train_input_matrix)
 #'   with levels like "s003_032". If NULL, it is derived from the built-in
 #'   output matrix (respecting a \code{row_indices} attribute on subsampled
@@ -36,10 +36,11 @@
 #'
 #' @details
 #' The full training matrix is not shipped inside the package. On first use
-#' it is downloaded from OSF (\url{https://osf.io/3csbz/}), or from the
-#' location given by \code{getOption("mlcvi.train_url")} or the
-#' \code{MLCVI_TRAIN_URL} environment variable, and cached under
-#' \code{tools::R_user_dir("mlcvi", "cache")}. Later calls read the cache.
+#' it is downloaded from OSF and cached for the session or, with your
+#' consent, across sessions; \code{\link{mlcvi_training_data}} documents
+#' the locations, the opt-in, and the offline behaviour. If the download is
+#' not possible this function stops with a message; pass a matrix via
+#' \code{train_input_matrix} instead.
 #'
 #' @examples
 #' # A country-level indicator observed for most countries, missing for a few
@@ -49,7 +50,7 @@
 #' scores$values[1:3] <- NA
 #'
 #' # Fast run on the bundled subsample with a fixed lambda
-#' small <- mlcvi:::mlcvi_train_input(small = TRUE)
+#' small <- mlcvi_training_data(small = TRUE)
 #' out <- mlcvi_extend(scores, train_input_matrix = small, lambda = 0.1,
 #'                     repeats = 1L, verbose = FALSE)
 #' head(out)
@@ -114,7 +115,7 @@ mlcvi_extend <- function(country_scores,
 #' codes  <- sub("^s003_", "", colnames(train_output_matrix))
 #' set.seed(1)
 #' scores <- data.frame(s003 = codes, values = rnorm(length(codes)))
-#' small  <- mlcvi:::mlcvi_train_input(small = TRUE)
+#' small  <- mlcvi_training_data(small = TRUE)
 #' fit <- mlcvi_ridge_model(scores, train_input_matrix = small, lambda = 0.1,
 #'                          repeats = 1L, verbose = FALSE)
 #' fit$results[, c("lambda", "RMSE", "MedAE")]
@@ -153,6 +154,11 @@ mlcvi_ridge_model <- function(country_scores,
                                     feature_weights    = NULL) {
   if (is.null(train_input_matrix)) {
     train_input_matrix <- mlcvi_train_input()
+    if (is.null(train_input_matrix)) {
+      stop("The full ML-CVI training matrix is not available (see the ",
+           "message above). Pass 'train_input_matrix' explicitly, for ",
+           "example mlcvi_training_data(small = TRUE).", call. = FALSE)
+    }
   }
   if (is.null(country_vec)) {
     country_vec <- .default_country_vec(train_input_matrix)

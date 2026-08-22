@@ -24,9 +24,9 @@ country code) and \code{values} (numeric, NA for countries to predict).}
 
 \item{train_input_matrix}{A numeric matrix of individual-level WVS
 responses. Defaults to the full ML-CVI training matrix, which is
-downloaded once and cached on first use (about 280 MB); see Details.
-Pass \code{mlcvi:::mlcvi_train_input(small = TRUE)} for a bundled
-subsample suitable for quick experiments.}
+downloaded once and cached on first use (about 280 MB); see
+\code{\link{mlcvi_training_data}}. Pass
+\code{mlcvi_training_data(small = TRUE)} for the bundled subsample.}
 
 \item{country_vec}{A factor vector of length nrow(train_input_matrix)
 with levels like "s003_032". If NULL, it is derived from the built-in
@@ -66,10 +66,11 @@ the indicator for countries that are missing.
 }
 \details{
 The full training matrix is not shipped inside the package. On first use
-it is downloaded from OSF (\url{https://osf.io/3csbz/}), or from the
-location given by \code{getOption("mlcvi.train_url")} or the
-\code{MLCVI_TRAIN_URL} environment variable, and cached under
-\code{tools::R_user_dir("mlcvi", "cache")}. Later calls read the cache.
+it is downloaded from OSF and cached for the session or, with your
+consent, across sessions; \code{\link{mlcvi_training_data}} documents
+the locations, the opt-in, and the offline behaviour. If the download is
+not possible this function stops with a message; pass a matrix via
+\code{train_input_matrix} instead.
 }
 \examples{
 # A country-level indicator observed for most countries, missing for a few
@@ -79,7 +80,7 @@ scores <- data.frame(s003 = codes, values = rnorm(length(codes)))
 scores$values[1:3] <- NA
 
 # Fast run on the bundled subsample with a fixed lambda
-small <- mlcvi:::mlcvi_train_input(small = TRUE)
+small <- mlcvi_training_data(small = TRUE)
 out <- mlcvi_extend(scores, train_input_matrix = small, lambda = 0.1,
                     repeats = 1L, verbose = FALSE)
 head(out)

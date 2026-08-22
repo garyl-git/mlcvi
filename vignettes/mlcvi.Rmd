@@ -97,9 +97,10 @@ individual-level WVS training responses to country means, fits a Ridge
 regression whose per-item penalties reflect the ML-CVI feature importances,
 and predicts the indicator for the missing countries.
 
-The full training matrix is large and is downloaded once on first use. For
-this vignette we use the bundled subsample and a fixed penalty so that the
-example runs in seconds.
+The full training matrix is large and is fetched from OSF the first time it
+is needed (see `?mlcvi_training_data` for where it is kept and how to opt in
+to a persistent cache). For this vignette we use the bundled subsample and a
+fixed penalty so that the example runs in seconds.
 
 ```{r}
 codes  <- sub("^s003_", "", colnames(train_output_matrix))
@@ -107,7 +108,7 @@ set.seed(1)
 scores <- data.frame(s003 = codes, values = rnorm(length(codes)))
 scores$values[1:3] <- NA
 
-small <- mlcvi:::mlcvi_train_input(small = TRUE)
+small <- mlcvi_training_data(small = TRUE)
 filled <- mlcvi_extend(scores, train_input_matrix = small, lambda = 0.1,
                        repeats = 1L, verbose = FALSE)
 filled[filled$s003 %in% codes[1:3], ]

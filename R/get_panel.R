@@ -55,7 +55,7 @@
 #'                 year = "yr", data = MLCVI_distance_matrix)
 #'
 #' # A matrix built from a custom item set, looked up as-is
-#' small <- mlcvi:::mlcvi_train_input(small = TRUE)
+#' small <- mlcvi_training_data(small = TRUE)
 #' m <- mlcvi_build_matrix(mlcvi_items_default[1:10], data = small, min_n = 20)
 #' mlcvi_get_panel(pairs, method = "matrix", data = m)
 #' @seealso [mlcvi.get.distance()] for single pairs with a printed report,

@@ -20,8 +20,8 @@ mlcvi_build_matrix(
 
 \item{data}{Numeric matrix of individual-level responses, one column per
 item. Defaults to the full ML-CVI training matrix (downloaded once and
-cached on first use). Pass \code{mlcvi:::mlcvi_train_input(small = TRUE)}
-for the bundled subsample.}
+cached on first use; see \code{\link{mlcvi_training_data}}). Pass
+\code{mlcvi_training_data(small = TRUE)} for the bundled subsample.}
 
 \item{country_vec}{Factor or character vector of length \code{nrow(data)}
 giving each row's country. If \code{NULL}, derived from the built-in
@@ -83,7 +83,7 @@ labelled by method. The label "ML-CVI" refers to the published matrix
 \code{\link{MLCVI_distance_matrix}} only.
 }
 \examples{
-small <- mlcvi:::mlcvi_train_input(small = TRUE)
+small <- mlcvi_training_data(small = TRUE)
 items <- mlcvi_items_default[1:10]
 
 # Kogut-Singh style distance on ten ML-CVI items, small subsample
