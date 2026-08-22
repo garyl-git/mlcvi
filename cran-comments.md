@@ -4,7 +4,10 @@
   manual and CRAN incoming checks
 * R-hub v2: linux (Ubuntu, R-devel), macos-arm64 (R-devel),
   windows (R-devel), plus the `donttest` and `nosuggests` configurations
-* win-builder: R-devel and R-release (TODO: paste results)
+* win-builder R-release (R 4.6.1, 2026-08-22): 0 errors, 0 warnings,
+  1 NOTE (New submission; possibly misspelled words in DESCRIPTION, see
+  below)
+* win-builder R-devel: TODO -- paste the result from the second email
 
 ## R CMD check results
 
@@ -13,10 +16,11 @@ The R-hub `nosuggests` configuration fails only at re-building the
 vignette because rmarkdown is not installed there; examples and tests pass
 without any suggested package.
 
-On CRAN incoming checks we expect one NOTE, "New submission", and possibly
-"Possibly misspelled words in DESCRIPTION" for the proper nouns Hofstede,
-Kogut, Shulgin, Guillen and the abbreviation ML-CVI, which are spelled as in
-the cited literature.
+On CRAN incoming checks we expect one NOTE: "New submission", together
+with "Possibly misspelled words in DESCRIPTION" (win-builder lists CVI,
+Guillen, Hofstede's, Kogut, Leng, Sheetal, Shulgin, Sobel, Zhou,
+importances, lookups). These are author names, the names of the cited
+methods, and standard terms, spelled as in the cited literature.
 
 ## Internet resources and user file space
 
