@@ -9,8 +9,6 @@ mlcvi_get_panel(
   method = c("MLCVI", "KS", "Shulgin", "matrix"),
   iso1 = "iso1",
   iso2 = "iso2",
-  year = "year",
-  rule = c("static", "wave", "locf"),
   data = NULL,
   ks_dims = c("6dims", "4dims")
 )
@@ -26,12 +24,6 @@ example the output of \code{\link{mlcvi_build_matrix}}) and carries no
 method label of its own.}
 
 \item{iso1, iso2}{Names of the country-code columns in \code{pairs}.}
-
-\item{year}{Name of the year column in \code{pairs}. Only required when
-\code{rule} is not \code{"static"}.}
-
-\item{rule}{Character; how distances are assigned across years. Only
-\code{"static"} is currently implemented.}
 
 \item{data}{Optional custom table overriding the packaged one, with the
 same structure as for \code{\link{mlcvi.get.distance}}. Required when
@@ -56,12 +48,11 @@ code, missing cell, missing Hofstede dimension) yield \code{NA} in
 \code{distance} and a short explanation in \code{distance_note} rather
 than an error.
 
-The tables shipped with the package are time-invariant, so
-\code{rule = "static"} applies the same distance to every year and the
-\code{year} column, if present, is passed through untouched. The values
-\code{"wave"} and \code{"locf"} reserve the interface for wave-specific
-tables (matching each year to its WVS wave, or carrying the latest wave
-forward); they are validated but not yet available.
+The distance tables are time-invariant by design: the ML-CVI (Sheetal,
+Madan, Lee, and Savani 2025) characterizes stable cross-country value
+differences, so the same distance applies to every year of a panel. Any
+further columns in \code{pairs} (such as a year) are passed through
+untouched, which makes the result merge directly into panel data.
 }
 \examples{
 pairs <- data.frame(
@@ -76,7 +67,7 @@ mlcvi_get_panel(pairs, method = "KS", ks_dims = "4dims")
 # Custom column names and a custom matrix
 trade <- data.frame(origin = "USA", dest = c("JPN", "DEU"), yr = 2000)
 mlcvi_get_panel(trade, method = "MLCVI", iso1 = "origin", iso2 = "dest",
-                year = "yr", data = MLCVI_distance_matrix)
+                data = MLCVI_distance_matrix)
 
 # A matrix built from a custom item set, looked up as-is
 small <- mlcvi_training_data(small = TRUE)

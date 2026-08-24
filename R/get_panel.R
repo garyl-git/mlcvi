@@ -11,12 +11,11 @@
 #' \code{distance} and a short explanation in \code{distance_note} rather
 #' than an error.
 #'
-#' The tables shipped with the package are time-invariant, so
-#' \code{rule = "static"} applies the same distance to every year and the
-#' \code{year} column, if present, is passed through untouched. The values
-#' \code{"wave"} and \code{"locf"} reserve the interface for wave-specific
-#' tables (matching each year to its WVS wave, or carrying the latest wave
-#' forward); they are validated but not yet available.
+#' The distance tables are time-invariant by design: the ML-CVI (Sheetal,
+#' Madan, Lee, and Savani 2025) characterizes stable cross-country value
+#' differences, so the same distance applies to every year of a panel. Any
+#' further columns in \code{pairs} (such as a year) are passed through
+#' untouched, which makes the result merge directly into panel data.
 #'
 #' @param pairs A data frame with the two country-code columns named by
 #'   \code{iso1} and \code{iso2} (ISO alpha-3), and optionally a year column.
@@ -26,10 +25,6 @@
 #'   example the output of \code{\link{mlcvi_build_matrix}}) and carries no
 #'   method label of its own.
 #' @param iso1,iso2 Names of the country-code columns in \code{pairs}.
-#' @param year Name of the year column in \code{pairs}. Only required when
-#'   \code{rule} is not \code{"static"}.
-#' @param rule Character; how distances are assigned across years. Only
-#'   \code{"static"} is currently implemented.
 #' @param data Optional custom table overriding the packaged one, with the
 #'   same structure as for \code{\link{mlcvi.get.distance}}. Required when
 #'   \code{method = "matrix"}.
@@ -52,7 +47,7 @@
 #' # Custom column names and a custom matrix
 #' trade <- data.frame(origin = "USA", dest = c("JPN", "DEU"), yr = 2000)
 #' mlcvi_get_panel(trade, method = "MLCVI", iso1 = "origin", iso2 = "dest",
-#'                 year = "yr", data = MLCVI_distance_matrix)
+#'                 data = MLCVI_distance_matrix)
 #'
 #' # A matrix built from a custom item set, looked up as-is
 #' small <- mlcvi_training_data(small = TRUE)
@@ -65,28 +60,18 @@ mlcvi_get_panel <- function(pairs,
                             method = c("MLCVI", "KS", "Shulgin", "matrix"),
                             iso1 = "iso1",
                             iso2 = "iso2",
-                            year = "year",
-                            rule = c("static", "wave", "locf"),
                             data = NULL,
                             ks_dims = c("6dims", "4dims")) {
   if (!is.data.frame(pairs)) {
     stop("'pairs' must be a data frame.")
   }
   method  <- tolower(match.arg(method))
-  rule    <- match.arg(rule)
   ks_dims <- match.arg(ks_dims)
 
   for (col in c(iso1, iso2)) {
     if (!col %in% names(pairs)) {
       stop("Column '", col, "' not found in 'pairs'.")
     }
-  }
-  if (rule != "static") {
-    if (!year %in% names(pairs)) {
-      stop("Column '", year, "' is required for rule = '", rule, "'.")
-    }
-    stop("rule = '", rule, "' requires wave-specific distance tables, which ",
-         "are not yet available in this version. Use rule = 'static'.")
   }
 
   from <- .clean_iso3(as.character(pairs[[iso1]]))

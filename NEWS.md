@@ -19,9 +19,8 @@ snake_case.
 - `mlcvi_get_panel()` looks up cultural distances for a whole data frame of
   country pairs at once (for merging into dyadic panel data). Unresolvable
   rows get `NA` plus a `distance_note` instead of an error, and the input
-  rows and order are preserved. A `rule` argument reserves the interface for
-  wave-specific tables (`"wave"`, `"locf"`); only `"static"` is available
-  in this version.
+  rows and order are preserved. The distance tables are time-invariant by
+  design, so the same distance applies to every year of a panel.
 - `mlcvi_build_matrix()` constructs classical distance matrices
   (Kogut-Singh style, Euclidean, Mahalanobis) from a user-specified WVS item
   set, at country level or one matrix per WVS wave, with renormalization

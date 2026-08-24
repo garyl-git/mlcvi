@@ -88,10 +88,6 @@ test_that("panel input validation", {
   expect_error(mlcvi_get_panel(pairs, iso1 = "nope"),
                "Column 'nope' not found")
   expect_error(mlcvi_get_panel(pairs, method = "bogus"))
-  expect_error(mlcvi_get_panel(pairs, method = "MLCVI", rule = "wave"),
-               "not yet available")
-  expect_error(mlcvi_get_panel(pairs[, c("iso1", "iso2")], rule = "locf"),
-               "Column 'year' is required")
   expect_error(mlcvi_get_panel(pairs, method = "MLCVI",
                                data = unname(MLCVI_distance_matrix)),
                "must have row and column names")

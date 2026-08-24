@@ -69,9 +69,9 @@ mlcvi_get_panel(pairs, method = "MLCVI")
 mlcvi_get_panel(pairs, method = "KS")
 ```
 
-The packaged tables are time-invariant, so the same distance applies to every
-year (`rule = "static"`). The `rule` argument reserves `"wave"` and `"locf"`
-for wave-specific tables in a later version.
+The distance tables are time-invariant by design, so the same distance
+applies to every year of a panel; extra columns such as the year pass through
+untouched.
 
 ## Screening ML-CVI items as mediators
 
